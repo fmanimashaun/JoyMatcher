@@ -1,0 +1,20 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="marriageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4D0052"/>
+      <stop offset="100%" stop-color="#F16A6F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Heart shape -->
+  <path d="M40 60 C25 50 15 40 15 30 C15 22 20 17 27 17 C32 17 37 20 40 25 C43 20 48 17 53 17 C60 17 65 22 65 30 C65 40 55 50 40 60 Z"
+        fill="url(#marriageGrad)" opacity="0.9"/>
+
+  <!-- Rings intertwined -->
+  <g transform="translate(25, 50)">
+    <!-- Left ring -->
+    <circle cx="10" cy="10" r="8" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right ring -->
+    <circle cx="20" cy="10" r="8" fill="none" stroke="white" stroke-width="2"/>
+  </g>
+</svg>

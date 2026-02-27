@@ -1,0 +1,78 @@
+{
+  "examples": [
+    {
+      "scenario": "Basic EDT",
+      "yourCompleted": 4,
+      "theirCompleted": 3,
+      "youShared": 3,
+      "theyShared": 2,
+      "expectedEDT": 2,
+      "explanation": "EDT is limited by the minimum value (they're only sharing Tier 2)"
+    },
+    {
+      "scenario": "Asymmetric Completion",
+      "yourCompleted": 2,
+      "theirCompleted": 5,
+      "youShared": 2,
+      "theyShared": 4,
+      "expectedEDT": 2,
+      "explanation": "EDT is limited by your completion (you've only completed Tier 2)"
+    },
+    {
+      "scenario": "Free User vs Premium User",
+      "yourCompleted": 2,
+      "theirCompleted": 4,
+      "youShared": 2,
+      "theyShared": 4,
+      "expectedEDT": 2,
+      "explanation": "Free user (Tier 2 ceiling) viewing Premium user"
+    },
+    {
+      "scenario": "After Revocation",
+      "yourCompleted": 4,
+      "theirCompleted": 4,
+      "youShared": 2,
+      "theyShared": 2,
+      "expectedEDT": 2,
+      "explanation": "After symmetric revocation, both users only share Tier 2"
+    },
+    {
+      "scenario": "Perfect Match",
+      "yourCompleted": 4,
+      "theirCompleted": 4,
+      "youShared": 4,
+      "theyShared": 4,
+      "expectedEDT": 4,
+      "explanation": "Both users completed Tier 4 and sharing all with each other"
+    },
+    {
+      "scenario": "VIP with Verification",
+      "yourCompleted": 5,
+      "theirCompleted": 5,
+      "youShared": 5,
+      "theyShared": 5,
+      "expectedEDT": 5,
+      "explanation": "Both VIP users completed Tier 5 (verification) and sharing all"
+    }
+  ],
+  "edgeCases": [
+    {
+      "scenario": "New User (No Completion)",
+      "yourCompleted": 0,
+      "theirCompleted": 4,
+      "youShared": 0,
+      "theyShared": 4,
+      "expectedEDT": 0,
+      "explanation": "Cannot see anything if you haven't completed any tier"
+    },
+    {
+      "scenario": "Selective Sharing",
+      "yourCompleted": 4,
+      "theirCompleted": 4,
+      "youShared": 1,
+      "theyShared": 4,
+      "expectedEDT": 1,
+      "explanation": "Even though both completed Tier 4, you're only sharing Tier 1"
+    }
+  ]
+}

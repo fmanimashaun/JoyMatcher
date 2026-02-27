@@ -1,0 +1,20 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trustGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4D0052"/>
+      <stop offset="100%" stop-color="#F16A6F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield outline -->
+  <path d="M40 10 L60 20 L60 35 Q60 55 40 70 Q20 55 20 35 L20 20 Z"
+        fill="url(#trustGrad)" opacity="0.15"/>
+
+  <!-- Shield with checkmark -->
+  <path d="M40 15 L55 22 L55 35 Q55 50 40 62 Q25 50 25 35 L25 22 Z"
+        fill="url(#trustGrad)" opacity="0.9"/>
+
+  <!-- Checkmark -->
+  <path d="M32 38 L37 43 L50 30"
+        stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

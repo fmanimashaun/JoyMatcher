@@ -1,0 +1,259 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "adaeze@demo.com",
+      "displayName": "Adaeze Okonkwo",
+      "firstName": "Adaeze",
+      "lastName": "Okonkwo",
+      "age": 28,
+      "location": "Lagos, Nigeria",
+      "subscription": "premium",
+      "completedTier": 4,
+      "profilePhoto": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400",
+      "tier1": {
+        "gender": "Female",
+        "dateOfBirth": "1997-06-15",
+        "faith": "Christian",
+        "tribe": "Igbo",
+        "relationshipIntent": "Marriage within 2 years",
+        "education": "Masters",
+        "occupation": "Software Engineer"
+      },
+      "tier2": {
+        "hobbies": ["Reading", "Cooking", "Travel"],
+        "languages": ["English", "Igbo"],
+        "personalityTraits": ["Ambitious", "Family-oriented", "Calm"],
+        "dealBreakers": ["Smoking", "No faith"],
+        "lifeGoals": "Build a successful tech startup while raising a family"
+      }
+    },
+    {
+      "id": 2,
+      "email": "emeka@demo.com",
+      "displayName": "Emeka Adeyemi",
+      "firstName": "Emeka",
+      "lastName": "Adeyemi",
+      "age": 32,
+      "location": "Abuja, Nigeria",
+      "subscription": "premium",
+      "completedTier": 4,
+      "profilePhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+      "tier1": {
+        "gender": "Male",
+        "dateOfBirth": "1993-03-22",
+        "faith": "Christian",
+        "tribe": "Yoruba",
+        "relationshipIntent": "Marriage within 1 year",
+        "education": "MBA",
+        "occupation": "Investment Banker"
+      },
+      "tier2": {
+        "hobbies": ["Golf", "Reading", "Investing"],
+        "languages": ["English", "Yoruba", "French"],
+        "personalityTraits": ["Driven", "Traditional", "Leader"],
+        "dealBreakers": ["Career-focused only"],
+        "lifeGoals": "Build generational wealth and strong family values"
+      }
+    },
+    {
+      "id": 3,
+      "email": "chisom@demo.com",
+      "displayName": "Chisom Nwosu",
+      "firstName": "Chisom",
+      "lastName": "Nwosu",
+      "age": 26,
+      "location": "Port Harcourt, Nigeria",
+      "subscription": "free",
+      "completedTier": 2,
+      "profilePhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
+      "tier1": {
+        "gender": "Female",
+        "dateOfBirth": "1999-11-08",
+        "faith": "Christian",
+        "tribe": "Igbo",
+        "relationshipIntent": "Marriage within 2 years",
+        "education": "Bachelors",
+        "occupation": "Marketing Manager"
+      },
+      "tier2": {
+        "hobbies": ["Fashion", "Dancing", "Music"],
+        "languages": ["English", "Igbo"],
+        "personalityTraits": ["Outgoing", "Creative", "Caring"],
+        "dealBreakers": ["Dishonesty"],
+        "lifeGoals": "Build a fashion brand and have a loving family"
+      }
+    },
+    {
+      "id": 4,
+      "email": "tunde@demo.com",
+      "displayName": "Tunde Bakare",
+      "firstName": "Tunde",
+      "lastName": "Bakare",
+      "age": 35,
+      "location": "Lagos, Nigeria",
+      "subscription": "vip",
+      "completedTier": 5,
+      "profilePhoto": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400",
+      "tier1": {
+        "gender": "Male",
+        "dateOfBirth": "1990-08-12",
+        "faith": "Christian",
+        "tribe": "Yoruba",
+        "relationshipIntent": "Marriage within 1 year",
+        "education": "PhD",
+        "occupation": "Medical Doctor"
+      },
+      "tier2": {
+        "hobbies": ["Reading", "Chess", "Philanthropy"],
+        "languages": ["English", "Yoruba", "German"],
+        "personalityTraits": ["Intellectual", "Compassionate", "Traditional"],
+        "dealBreakers": ["No children desired"],
+        "lifeGoals": "Establish medical clinics in rural Nigeria"
+      }
+    },
+    {
+      "id": 5,
+      "email": "ngozi@demo.com",
+      "displayName": "Ngozi Eze",
+      "firstName": "Ngozi",
+      "lastName": "Eze",
+      "age": 30,
+      "location": "London, UK",
+      "subscription": "vip",
+      "completedTier": 5,
+      "profilePhoto": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400",
+      "tier1": {
+        "gender": "Female",
+        "dateOfBirth": "1995-04-20",
+        "faith": "Christian",
+        "tribe": "Igbo",
+        "relationshipIntent": "Marriage within 1 year",
+        "education": "Masters",
+        "occupation": "Barrister"
+      },
+      "tier2": {
+        "hobbies": ["Piano", "Art", "Travel"],
+        "languages": ["English", "Igbo", "French"],
+        "personalityTraits": ["Elegant", "Articulate", "Independent"],
+        "dealBreakers": ["No ambition"],
+        "lifeGoals": "Partner at a law firm while building a strong family"
+      }
+    }
+  ],
+  "interests": [
+    {
+      "id": 1,
+      "fromUserId": 2,
+      "toUserId": 1,
+      "status": "pending",
+      "message": "Your profile resonates with my values. I'd love to connect.",
+      "createdAt": "2026-02-25T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "fromUserId": 4,
+      "toUserId": 1,
+      "status": "accepted",
+      "message": "I appreciate your focus on family values.",
+      "createdAt": "2026-02-20T14:00:00Z",
+      "acceptedAt": "2026-02-21T09:15:00Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "conversationId": "1-4",
+      "fromUserId": 4,
+      "toUserId": 1,
+      "content": "Hello Adaeze, thank you for accepting my interest. I'd love to learn more about your work in tech.",
+      "timestamp": "2026-02-21T10:00:00Z",
+      "read": true
+    },
+    {
+      "id": 2,
+      "conversationId": "1-4",
+      "fromUserId": 1,
+      "toUserId": 4,
+      "content": "Hi Tunde! Thank you for reaching out. I'm a software engineer working on fintech solutions. What drew you to medicine?",
+      "timestamp": "2026-02-21T11:30:00Z",
+      "read": true
+    },
+    {
+      "id": 3,
+      "conversationId": "1-4",
+      "fromUserId": 4,
+      "toUserId": 1,
+      "content": "I've always been passionate about helping people. My goal is to make healthcare more accessible in Nigeria.",
+      "timestamp": "2026-02-21T14:00:00Z",
+      "read": false
+    }
+  ],
+  "conversations": [
+    {
+      "id": "1-4",
+      "participants": [1, 4],
+      "lastMessage": "I've always been passionate about helping people...",
+      "lastMessageAt": "2026-02-21T14:00:00Z",
+      "unreadCount": 1
+    }
+  ],
+  "successStories": [
+    {
+      "id": 1,
+      "names": "Chidinma & Kwame",
+      "location": "Lagos, Nigeria",
+      "status": "Engaged",
+      "statusDate": "February 2026",
+      "quote": "We connected over shared values on Tier 3. By Tier 4, we knew we were compatible for marriage. Engaged after 8 months!",
+      "author": "Chidinma, 29",
+      "photo": null
+    },
+    {
+      "id": 2,
+      "names": "Dr. Amara & Emmanuel",
+      "location": "VIP Members",
+      "status": "Married",
+      "statusDate": "December 2025",
+      "quote": "The VIP concierge service saved me time. My matchmaker understood exactly what I needed. Found my husband in 6 months.",
+      "author": "Dr. Amara, 34",
+      "photo": null
+    },
+    {
+      "id": 3,
+      "names": "Folake & Chidi",
+      "location": "Toronto → Lagos",
+      "status": "Engaged",
+      "statusDate": "January 2026",
+      "quote": "From Toronto to Lagos—JoyMatcher helped us navigate the distance. The tier system built trust before we even met.",
+      "author": "Folake, 31",
+      "photo": null
+    }
+  ],
+  "faqs": [
+    {
+      "id": 1,
+      "category": "Getting Started",
+      "question": "How do I sign up for JoyMatcher?",
+      "answer": "Click 'Get Started' on our homepage, enter your email and create a password. You'll then complete Tier 1 of your profile to start browsing."
+    },
+    {
+      "id": 2,
+      "category": "Tier System",
+      "question": "What is the tier system?",
+      "answer": "JoyMatcher uses a 5-tier progressive disclosure system. You share information gradually, and you can only see details from others who have completed the same tier level."
+    },
+    {
+      "id": 3,
+      "category": "Pricing",
+      "question": "How much does Premium cost?",
+      "answer": "Premium costs ₦18,000/month or ₦45,000 for 3 months (save ₦9,000). Premium allows you to complete Tiers 3-4 and message Premium users."
+    },
+    {
+      "id": 4,
+      "category": "VIP",
+      "question": "What does VIP membership include?",
+      "answer": "VIP starts at ₦200,000+/month and includes a personal matchmaker, curated introductions, Tier 5 access, and priority support."
+    }
+  ]
+}

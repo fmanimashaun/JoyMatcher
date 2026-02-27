@@ -1,0 +1,408 @@
+/**
+ * JoyMatcher - Main Stylesheet for React
+ *
+ * Design System:
+ * - Purple-tinted neutrals for brand consistency
+ * - Editorial typography with Georgia serif
+ * - Premium, marriage-focused aesthetic
+ * - Calm, structured, professional
+ */
+
+/* Tailwind CSS v3 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Custom Properties (Variables) */
+:root {
+  /* Brand Colors */
+  --color-primary-base: #4D0052;
+  --color-primary-lighter: #7D3365;
+  --color-primary-darker: #3A003D;
+  --color-accent-coral: #F16A6F;
+  --color-accent-magenta: #C4446D;
+  --color-accent-warm-purple: #8B6B9D;
+
+  /* Background Structural */
+  --bg-nav-primary: hsla(320, 18%, 96%, 1);
+  --bg-nav-secondary: hsla(320, 15%, 97%, 1);
+  --bg-page: hsla(320, 12%, 98%, 1);
+  --bg-container-secondary: hsla(320, 20%, 98%, 1);
+  --bg-container-inset: rgba(77, 0, 82, 0.05);
+  --bg-container-inset-strong: rgba(125, 51, 101, 0.10);
+
+  /* Text Colors */
+  --color-text-primary: hsla(320, 50%, 15%, 1);
+  --color-text-secondary: hsla(320, 30%, 35%, 1);
+  --color-text-tertiary: hsla(320, 20%, 55%, 1);
+  --color-text-quaternary: hsla(320, 15%, 70%, 1);
+  --color-text-on-dark-primary: rgba(255, 255, 255, 0.95);
+  --color-text-on-dark-secondary: rgba(255, 255, 255, 0.75);
+
+  /* Functional Colors */
+  --color-success: #8B7AA8;
+  --color-success-light: #E8E4F0;
+  --color-warning: #E8A87C;
+  --color-warning-light: #FFF4E6;
+  --color-error: #F16A6F;
+  --color-error-light: #FFE8E9;
+  --color-info: #5B4A8E;
+  --color-info-light: #E5E0F5;
+
+  /* Border Colors */
+  --border-default: hsla(320, 25%, 85%, 1);
+  --border-stronger: hsla(320, 35%, 75%, 1);
+
+  /* Shadows */
+  --shadow-subtle: 0 2px 8px rgba(77, 0, 82, 0.08);
+  --shadow-moderate: 0 4px 16px rgba(77, 0, 82, 0.12);
+  --shadow-pronounced: 0 8px 24px rgba(77, 0, 82, 0.16);
+  --shadow-premium: 0 4px 20px rgba(77, 0, 82, 0.20);
+
+  /* Typography */
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --line-height-base: 1.6;
+  --line-height-tight: 1.25;
+
+  /* Transitions */
+  --transition-base: all 200ms ease;
+  --transition-slow: all 300ms ease;
+}
+
+/* Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-serif);
+  line-height: var(--line-height-base);
+  color: var(--color-text-secondary);
+  background-color: var(--bg-page);
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-family: var(--font-sans);
+}
+
+h6 {
+  font-size: 1rem;
+  font-family: var(--font-sans);
+}
+
+/* Paragraphs */
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--color-primary-base);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-primary-lighter);
+}
+
+a:focus {
+  outline: 2px solid var(--color-primary-base);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Buttons */
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Form Elements */
+input, textarea, select {
+  font-family: var(--font-sans);
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Logo Gradient Text */
+.logo-gradient {
+  background: linear-gradient(135deg, var(--color-primary-base) 0%, var(--color-accent-coral) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Badge Components */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-verified {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.badge-premium {
+  background-color: rgba(77, 0, 82, 0.1);
+  color: var(--color-primary-base);
+}
+
+.badge-vip {
+  background: linear-gradient(135deg, var(--color-primary-base) 0%, var(--color-accent-coral) 100%);
+  color: var(--color-text-on-dark-primary);
+}
+
+/* Alert Components */
+.alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.alert-success {
+  background-color: var(--color-success-light);
+  border-left: 4px solid var(--color-success);
+}
+
+.alert-warning {
+  background-color: var(--color-warning-light);
+  border-left: 4px solid var(--color-warning);
+}
+
+.alert-error {
+  background-color: var(--color-error-light);
+  border-left: 4px solid var(--color-error);
+}
+
+.alert-info {
+  background-color: var(--color-info-light);
+  border-left: 4px solid var(--color-info);
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 0.75rem;
+  background-color: var(--border-default);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-primary-base), var(--color-accent-coral));
+  border-radius: 9999px;
+  transition: width 500ms ease-out;
+}
+
+/* Loading Spinner */
+.spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--border-default);
+  border-top-color: var(--color-primary-base);
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-premium);
+  width: 100%;
+  max-width: 28rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fadeIn 300ms ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 300ms ease-out;
+}
+
+/* Page transition styles */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary-base);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  a {
+    text-decoration: underline;
+  }
+
+  button {
+    border: 2px solid currentColor;
+  }
+}

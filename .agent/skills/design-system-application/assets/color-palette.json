@@ -1,0 +1,51 @@
+{
+  "brandColors": {
+    "primary": {
+      "name": "Purple Deep",
+      "hex": "#4D0052",
+      "rgb": "rgb(77, 0, 82)",
+      "tailwind": "jm-purple-deep",
+      "usage": "Primary brand color, buttons, links, headers"
+    },
+    "secondary": {
+      "name": "Coral",
+      "hex": "#F16A6F",
+      "rgb": "rgb(241, 106, 111)",
+      "tailwind": "jm-coral",
+      "usage": "Secondary brand color, accents, CTAs"
+    }
+  },
+  "neutrals": {
+    "gray-50": {
+      "hex": "#F9FAFB",
+      "usage": "Backgrounds, cards"
+    },
+    "gray-900": {
+      "hex": "#111827",
+      "usage": "Text, headings"
+    }
+  },
+  "semantic": {
+    "success": {
+      "hex": "#10B981",
+      "usage": "Success messages, completed states"
+    },
+    "error": {
+      "hex": "#EF4444",
+      "usage": "Error messages, validation failures"
+    },
+    "warning": {
+      "hex": "#F59E0B",
+      "usage": "Warning messages, attention needed"
+    }
+  },
+  "tailwindConfig": {
+    "extend": {
+      "colors": {
+        "jm-purple-deep": "#4D0052",
+        "jm-coral": "#F16A6F",
+        "jm-success": "#10B981"
+      }
+    }
+  }
+}
