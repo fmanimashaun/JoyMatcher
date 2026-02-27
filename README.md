@@ -23,7 +23,7 @@ JoyMatcher is a premium matchmaking platform designed specifically for marriage-
 
 ## 📊 Project Status
 
-### Documentation: ✅ 100% Complete (71 files, ~404,300 words)
+### Documentation: ✅ 100% Complete (82 files, ~404,300 words)
 
 All specification documents are complete and production-ready:
 
@@ -36,12 +36,36 @@ All specification documents are complete and production-ready:
 - ✅ **Feature Specs - User Screens** (14 files) - All user-facing pages with HTML/Tailwind examples
 - ✅ **Feature Specs - Admin Screens** (7 files) - All admin interfaces with role-based access
 
-### Prototype: 🚧 In Progress
+### Prototype: 🚧 In Progress (25/30 pages - 83%)
 
 - ✅ **Foundational Files:** Tailwind config, state management, components
 - ✅ **Public Pages:** Homepage, How It Works, Pricing, Signup, Login, VIP Landing
 - ⏳ **App Pages:** Dashboard, Discover, Profile View, Messages, Interests (coming soon)
 - ⏳ **Admin Pages:** User Management, VIP Coordination, Moderation (coming soon)
+
+### Agent Skills: ✅ Complete (11 skills)
+
+Skill system in `.agent/skills/` following Google Antigravity format:
+
+- ✅ **Mandatory Prerequisites:** documentation-consultation, brain-update
+- ✅ **Core Business Logic:** tier-system-enforcement, edt-calculation, show-interest-gating, subscription-tier-logic
+- ✅ **Admin & Safety:** admin-rbac-verification, anti-gravity-checking
+- ✅ **Development:** rails-development, design-system-application, vip-workflow-implementation
+
+### Brain System: ✅ Ready
+
+Implementation memory system in `/brain/` for Rails 8 development tracking:
+
+- ✅ **State Tracking:** planned.md, in-progress.md, completed.md
+- ✅ **Decisions:** Architectural decision documentation
+- ✅ **Learnings:** Implementation insights and lessons
+- ✅ **Templates:** Brain file templates for feature documentation
+
+### Rails 8 Development: ⏳ Ready to Begin
+
+- ✅ **Stack Finalized:** Rails 8.1.2 + Hotwire + CanCanCan + Solid Queue/Cache/Cable
+- ✅ **Documentation Complete:** CLAUDE.md v2.2.0, RULES.md v1.1.0
+- ⏳ **Phase 1 - Rails Foundation:** Starting next
 
 ---
 
@@ -82,9 +106,34 @@ cat "docs/Global Context/tier_system.md"
 ```
 JoyMatcher/
 ├── README.md                    # This file (project overview)
-├── CLAUDE.md                    # System contract for AI implementation
+├── CLAUDE.md                    # System contract for AI implementation (v2.2.0)
+├── RULES.md                     # System contract for Antigravity IDE (v1.1.0)
 │
-├── docs/                        # Complete documentation suite (71 files)
+├── .agent/                      # Agent skills system (Google Antigravity format)
+│   └── skills/                  # 11 skills for development automation
+│       ├── README.md            # Skills overview and dependencies
+│       ├── documentation-consultation/
+│       ├── brain-update/
+│       ├── tier-system-enforcement/
+│       ├── edt-calculation/
+│       ├── show-interest-gating/
+│       ├── subscription-tier-logic/
+│       ├── admin-rbac-verification/
+│       ├── anti-gravity-checking/
+│       ├── rails-development/
+│       ├── design-system-application/
+│       └── vip-workflow-implementation/
+│
+├── brain/                       # Implementation memory for Rails 8 development
+│   ├── README.md                # Brain structure overview
+│   ├── state/
+│   │   ├── planned.md           # 8-phase roadmap (12 features)
+│   │   ├── in-progress.md       # Active work tracking
+│   │   └── completed.md         # Completed features
+│   ├── decisions/               # Architectural decision docs
+│   └── learnings/               # Implementation insights
+│
+├── docs/                        # Complete documentation suite (82 files)
 │   ├── DOCUMENTATION_STATUS.md  # Completion tracking
 │   ├── DOCUMENTATION_INDEX.md   # File index with descriptions
 │   ├── Global Context/          # Product charter, tier system, user personas
@@ -98,7 +147,7 @@ JoyMatcher/
 │   │   └── Admin Screens/       # 7 admin interface specs
 │   └── legacy/                  # Archived earlier documents
 │
-└── prototype/                   # HTML/CSS/JS prototype
+└── prototype/                   # HTML/CSS/JS prototype (25/30 pages)
     ├── README.md                # Prototype-specific documentation
     ├── index.html               # Homepage
     ├── how-it-works.html        # Tier system explanation
@@ -134,18 +183,33 @@ JoyMatcher/
 
 ### Technology Stack
 
-**Frontend (Planned):**
-- Rails 8 with Hotwire (Turbo + Stimulus)
+**Production (Rails 8.1.2):**
+- **Framework:** Ruby on Rails 8.1.2 with Ruby 3.3+
+- **Database:** PostgreSQL 16+
+- **Authentication:** BCrypt (has_secure_password)
+- **Authorization:** CanCanCan (admin RBAC)
+- **Frontend:** Hotwire (Turbo Drive + Turbo Frames + Turbo Streams + Stimulus)
+- **ViewComponents:** Reusable UI components
+- **Styling:** Tailwind CSS v4 (same design tokens as prototype)
+- **Asset Pipeline:** Propshaft
+- **JavaScript:** Importmap-rails (ESM)
+- **Forms:** SimpleForm
+- **Pagination:** Pagy
+- **State Machines:** AASM
+- **Jobs:** Solid Queue (Rails 8 default)
+- **Cache:** Solid Cache (database-backed)
+- **WebSockets:** Solid Cable (Rails 8 default)
+- **Storage:** ActiveStorage (S3-compatible)
+- **Payments:** Stripe
+- **Observability:** OpenTelemetry
+- **Deployment:** Kamal
+
+**Prototype (React 19.2.0):**
+- React 19.2.0 (visual reference only)
 - Tailwind CSS v4
-- Action Cable (real-time messaging)
+- Vite 6.0.11
 
-**Backend:**
-- Ruby on Rails 8
-- PostgreSQL 16+
-- Redis 7 (caching, Action Cable)
-- Active Storage with S3
-
-**Mobile:**
+**Mobile (Planned):**
 - iOS (Swift + SwiftUI)
 - Android (Kotlin + Jetpack Compose)
 - RESTful API + WebSocket for real-time
@@ -246,10 +310,13 @@ EDT = Math.min(
 
 ### Start Here
 
-1. **[docs/DOCUMENTATION_STATUS.md](docs/DOCUMENTATION_STATUS.md)** - Overview of all 71 files
+1. **[docs/DOCUMENTATION_STATUS.md](docs/DOCUMENTATION_STATUS.md)** - Overview of all 82 files
 2. **[docs/Global Context/tier_system.md](docs/Global%20Context/tier_system.md)** - MASTER REFERENCE for tier logic
 3. **[docs/Global Context/product_charter.md](docs/Global%20Context/product_charter.md)** - Product vision and philosophy
-4. **[CLAUDE.md](CLAUDE.md)** - System contract for AI-assisted implementation
+4. **[CLAUDE.md](CLAUDE.md)** - System contract for AI-assisted implementation (v2.2.0)
+5. **[RULES.md](RULES.md)** - System contract for Antigravity IDE (v1.1.0)
+6. **[.agent/skills/README.md](.agent/skills/README.md)** - Agent skills overview (11 skills)
+7. **[brain/README.md](brain/README.md)** - Brain system for implementation tracking
 
 ### Technical Implementation
 
@@ -328,16 +395,31 @@ if (!canSend.eligible) {
 - [ ] App pages (8 pages) - **NEXT**
 - [ ] Admin pages (7 pages)
 
-### Phase 3: Rails 8 Backend ⏳ PLANNED
+### Phase 3: Rails 8 Backend ⏳ READY TO BEGIN
 
-- [ ] Database setup (PostgreSQL)
-- [ ] User authentication (Devise)
-- [ ] Tier completion workflows
-- [ ] Show Interest / Request Details flows
-- [ ] Real-time messaging (Action Cable)
-- [ ] Payment integration (Paystack, Stripe)
-- [ ] VIP application workflow
-- [ ] Admin panel
+**Phase 1: Rails Foundation**
+- [ ] Rails 8.1.2 project setup (PostgreSQL, Tailwind, Hotwire)
+- [ ] User model & authentication (BCrypt)
+- [ ] Tier system models (User tier tracking, TierSharing)
+
+**Phase 2: Core Business Logic**
+- [ ] EDT calculation (Effective Disclosure Tier)
+- [ ] Show Interest flow (ShowInterest model, mutual acceptance, cooldown)
+- [ ] Subscription logic (Stripe integration, tier ceilings)
+
+**Phase 3: Admin System**
+- [ ] Admin RBAC with CanCanCan (6 roles, VIP Expert isolation)
+- [ ] VIP workflow (application, Tier 5 verification, expert assignment)
+
+**Phase 4: Communication**
+- [ ] Messaging system (Turbo Streams, real-time)
+- [ ] Notifications (Action Cable integration)
+
+**Phase 5: UI & Polish**
+- [ ] ViewComponents library (locked states, button variants, cards)
+- [ ] Design system implementation (jm-* tokens, accessibility)
+
+See [brain/state/planned.md](brain/state/planned.md) for complete 8-phase roadmap.
 
 ### Phase 4: Mobile Apps ⏳ PLANNED
 
