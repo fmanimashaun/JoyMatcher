@@ -2,24 +2,24 @@
 
 ## Prerequisites
 
-- **Ruby:** 3.3.10 (see below for installation)
+- **Ruby:** 3.4.8 (see below for installation)
 - **PostgreSQL:** 14+ (database)
 - **Node.js:** 18+ (for JavaScript tooling)
 - **Git:** For version control
 
 ---
 
-## Step 1: Install Ruby 3.3.10 (Windows)
+## Step 1: Install Ruby 3.4.8 (Windows)
 
 ### Using RubyInstaller (Recommended)
 
-1. Download **Ruby+Devkit 3.3.10-1 (x64)** from:
+1. Download **Ruby+Devkit 3.4.8-1 (x64)** from:
    https://rubyinstaller.org/downloads/
 
 2. Run the installer:
    - ✅ Add Ruby executables to PATH
    - ✅ Run 'ridk install' for MSYS2
-   - Install to: `C:\Ruby33-x64`
+   - Install to: `C:\Ruby34-x64`
 
 3. Complete MSYS2 setup:
    - Press `Enter` to install default toolchain (option 1)
@@ -27,7 +27,7 @@
 4. Verify installation:
    ```bash
    ruby --version
-   # Expected: ruby 3.3.10
+   # Expected: ruby 3.4.8
 
    gem --version
    # Expected: gem 3.x.x
@@ -73,7 +73,7 @@
 
 1. **Install Bundler:**
    ```bash
-   gem install bundler
+   gem install bundler -v 2.5.22
    ```
 
 2. **Install Rails dependencies:**
@@ -150,7 +150,7 @@
 **Fix:**
 1. Restart your terminal/VSCode
 2. Or manually add to PATH:
-   - System Environment Variables → Path → Add: `C:\Ruby33-x64\bin`
+   - System Environment Variables → Path → Add: `C:\Ruby34-x64\bin`
 
 ### PostgreSQL Connection Error
 
