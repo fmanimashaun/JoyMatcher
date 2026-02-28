@@ -333,15 +333,16 @@
     z-index: 10;
   }
 
-  /* Pagy pagination */
-  .pagy {
+  /* Pagy v43 pagination — uses .series-nav wrapper class */
+  .pagy.series-nav, .pagy {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
     padding: 1.5rem 0;
   }
-  .pagy a, .pagy span {
+  .pagy.series-nav a, .pagy a,
+  .pagy.series-nav span, .pagy span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -357,15 +358,33 @@
     color: hsla(320, 30%, 35%, 1);
     background-color: #FFFFFF;
   }
-  .pagy a:hover {
+  .pagy.series-nav a:hover, .pagy a:hover {
     background-color: rgba(77, 0, 82, 0.05);
     border-color: #7D3365;
     color: #4D0052;
     text-decoration: none;
   }
-  .pagy .current { background-color: #4D0052; color: rgba(255, 255, 255, 0.95); border-color: #4D0052; }
-  .pagy .disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-  .pagy .gap { border: none; background: transparent; color: hsla(320, 20%, 55%, 1); }
+  /* Current page (aria-current="page") */
+  .pagy [aria-current="page"],
+  .pagy.series-nav [aria-current="page"] {
+    background-color: #4D0052;
+    color: rgba(255, 255, 255, 0.95);
+    border-color: #4D0052;
+  }
+  /* Disabled prev/next (aria-disabled="true") */
+  .pagy [aria-disabled="true"],
+  .pagy.series-nav [aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  /* Gap separator (role="separator") */
+  .pagy [role="separator"],
+  .pagy.series-nav [role="separator"] {
+    border: none;
+    background: transparent;
+    color: hsla(320, 20%, 55%, 1);
+  }
 
   /* Skip link (accessibility) */
   .skip-link {

@@ -1,54 +1,27 @@
 # frozen_string_literal: true
 #
-# Pagy — JoyMatcher Pagination Configuration
-# Based on: docs/Design System/design_system.md
+# Pagy v43 — JoyMatcher Pagination Configuration
+# See: https://ddnexus.github.io/pagy/resources/initializer/
 #
-# Pagy outputs HTML with CSS classes; we style via .pagy classes in application.css
-# See: https://ddnexus.github.io/pagy/docs/api/pagy/
+# NOTE: Pagy v43 changed the API significantly:
+#   - Pagy::DEFAULT is frozen (don't modify it)
+#   - Pagy::OPTIONS is where we set custom defaults
+#   - No more Pagy::Backend/Frontend — use Pagy::Method in controllers
+#   - No more extras/ directory — features are built-in
+#   - Helpers are instance methods on the pagy object (@pagy.series_nav)
 #
 
 # =========================================================
-# Core Defaults
+# Custom Defaults
 # =========================================================
 
-# Items per page (sensible defaults per page type)
-Pagy::DEFAULT[:limit] = 12          # Discover grid (3 cols x 4 rows)
+# Items per page: 12 matches 3-column discover grid (4 rows)
+Pagy::OPTIONS[:limit] = 12
 
-# Number of navigation pages to show around current page
-Pagy::DEFAULT[:ends]  = 1           # Always show first/last page
-Pagy::DEFAULT[:size]  = 5           # Pages shown in nav window
-
-# Link extras
-Pagy::DEFAULT[:link_extra] = ''     # No extra HTML on all links
+# Number of page links shown in nav (around current page)
+Pagy::OPTIONS[:size]  = 5
 
 # =========================================================
-# I18n
+# Freeze options after configuration (required by v43)
 # =========================================================
-Pagy::DEFAULT[:locale] = 'en'
-
-# =========================================================
-# Overflow handling
-# Redirect to last page when page exceeds total_pages
-# =========================================================
-# Pagy::DEFAULT[:overflow] = :last_page
-
-# =========================================================
-# Searchkick / ElasticSearch (if added later)
-# =========================================================
-# require 'pagy/extras/searchkick'
-
-# =========================================================
-# Metadata extra (JSON API responses)
-# =========================================================
-# require 'pagy/extras/metadata'
-
-# =========================================================
-# Trim extra (remove page=1 from URL)
-# =========================================================
-require 'pagy/extras/trim'
-
-# =========================================================
-# Overflow extra (handle out-of-range pages gracefully)
-# =========================================================
-require 'pagy/extras/overflow'
-Pagy::DEFAULT[:overflow] = :last_page
+Pagy::OPTIONS.freeze
