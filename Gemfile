@@ -19,20 +19,6 @@ gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-# JSON:API serialization and standards enforcement
-gem "jsonapi-serializer"
-gem "jsonapi-rails"
-
-# Charts and analytics dashboards
-gem "chartkick"
-gem "groupdate"
-
-# HTTP client for external API integrations
-gem "httparty"
-
-# Device/platform detection (mobile vs desktop, OS)
-gem "platform_agent", "~> 1.0"
-
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.21"
 
@@ -43,7 +29,6 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cache"
 gem "solid_queue", "~> 1.3"
 gem "solid_cable"
-gem "mission_control-jobs" # UI for monitoring Solid Queue background jobs
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", "~> 1.22", require: false
@@ -57,7 +42,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-# AWS SDK for file storage and audit log archival to S3
+# AWS SDK for file storage (profile photos, documents)
 gem "aws-sdk-s3", "~> 1.176", require: false
 
 # Forms made easy for Rails [https://github.com/heartcombo/simple_form]
@@ -75,24 +60,11 @@ gem "aasm", "~> 5.5"
 # CSV export for admin reports
 gem "csv"
 
-# Country and Holiday support
-gem "countries", "~> 8.1"  # ISO country data (names, codes, currencies)
-gem "holidays"              # National holidays for 100+ countries
+# ISO country data — currency detection (₦ vs $) and locale support
+gem "countries", "~> 8.1"
 
-# Security: Rate limiting for authentication and API endpoints
+# Security: Rate limiting for authentication and sensitive endpoints
 gem "rack-attack"
-
-# Structured HTTP request logging
-gem "lograge"
-
-# Observability — OpenTelemetry (vendor-agnostic tracing, metrics, logs)
-gem "opentelemetry-sdk", "~> 1.10"
-gem "opentelemetry-exporter-otlp", "~> 0.31"
-gem "opentelemetry-metrics-sdk", "~> 0.12"
-gem "opentelemetry-exporter-otlp-metrics", "~> 0.6"
-gem "opentelemetry-logs-sdk", "~> 0.4"
-gem "opentelemetry-exporter-otlp-logs", "~> 0.2"
-gem "opentelemetry-instrumentation-all", "~> 0.90"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -100,12 +72,6 @@ group :development, :test do
 
   # Test framework
   gem "rspec-rails"
-
-  # API documentation (contract-first Swagger/OpenAPI docs)
-  gem "rswag"
-  gem "rswag-api"
-  gem "rswag-specs"
-  gem "rswag-ui"
 
   # ERB linting
   gem "erb_lint", require: false
