@@ -80,9 +80,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
 
-  # Controller testing helpers
-  gem "rails-controller-testing"
-
   # Audits gems for known security defects
   gem "bundler-audit", require: false
 
