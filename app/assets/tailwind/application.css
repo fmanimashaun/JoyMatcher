@@ -1,1 +1,403 @@
 @import "tailwindcss";
+
+/* =========================================================
+   JoyMatcher Design System — Tailwind CSS v4 Theme
+   Based on: docs/Design System/design_system.md
+   Brand: Trust-based relationship infrastructure (NOT a dating app)
+   ========================================================= */
+
+@theme {
+  /* -------------------------------------------------------
+     Brand Colors — Primary Purple Gradient → Coral
+     ------------------------------------------------------- */
+  --color-jm-purple-deep:    #4D0052;
+  --color-jm-purple-lighter: #7D3365;
+  --color-jm-purple-darker:  #3A003D;
+  --color-jm-coral:          #F16A6F;
+  --color-jm-coral-magenta:  #C4446D;
+  --color-jm-warm-purple:    #8B6B9D;
+
+  /* -------------------------------------------------------
+     Background Structural Colors (HSLA 320 hue = purple-tinted)
+     ------------------------------------------------------- */
+  --color-jm-bg-nav-primary:            hsla(320, 18%, 96%, 1);
+  --color-jm-bg-nav-secondary:          hsla(320, 15%, 97%, 1);
+  --color-jm-bg-page:                   hsla(320, 12%, 98%, 1);
+  --color-jm-bg-container-primary:      #FFFFFF;
+  --color-jm-bg-container-secondary:    hsla(320, 20%, 98%, 1);
+
+  /* -------------------------------------------------------
+     Text Colors (Purple-tinted HSLA 320)
+     ------------------------------------------------------- */
+  --color-jm-text-primary:   hsla(320, 50%, 15%, 1);
+  --color-jm-text-secondary: hsla(320, 30%, 35%, 1);
+  --color-jm-text-tertiary:  hsla(320, 20%, 55%, 1);
+  --color-jm-text-muted:     hsla(320, 15%, 70%, 1);
+  --color-jm-text-link:      #4D0052;
+  --color-jm-text-link-hover:#7D3365;
+
+  /* -------------------------------------------------------
+     Functional Status Colors
+     ------------------------------------------------------- */
+  --color-jm-success:       #8B7AA8;
+  --color-jm-success-light: #E8E4F0;
+  --color-jm-error:         #F16A6F;
+  --color-jm-error-light:   #FFE8E9;
+  --color-jm-warning:       #E8A87C;
+  --color-jm-warning-light: #FFF4E6;
+  --color-jm-info:          #5B4A8E;
+  --color-jm-info-light:    #E5E0F5;
+
+  /* -------------------------------------------------------
+     Border Colors
+     ------------------------------------------------------- */
+  --color-jm-border-default:  hsla(320, 25%, 85%, 1);
+  --color-jm-border-stronger: hsla(320, 35%, 75%, 1);
+  --color-jm-border-premium:  #4D0052;
+
+  /* -------------------------------------------------------
+     Typography
+     ------------------------------------------------------- */
+  --font-family-jm: Georgia, 'Times New Roman', serif;
+
+  /* -------------------------------------------------------
+     Shadows (purple-tinted rgba)
+     ------------------------------------------------------- */
+  --shadow-jm-subtle:     0 2px 8px rgba(77, 0, 82, 0.08);
+  --shadow-jm-moderate:   0 4px 16px rgba(77, 0, 82, 0.12);
+  --shadow-jm-pronounced: 0 8px 24px rgba(77, 0, 82, 0.16);
+  --shadow-jm-premium:    0 4px 20px rgba(77, 0, 82, 0.20);
+}
+
+/* =========================================================
+   Base Styles
+   ========================================================= */
+
+@layer base {
+  html { font-size: 16px; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.6;
+    color: hsla(320, 30%, 35%, 1);
+    background-color: hsla(320, 12%, 98%, 1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: hsla(320, 50%, 15%, 1);
+    font-weight: 600;
+    line-height: 1.25;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  a {
+    color: #4D0052;
+    text-decoration: none;
+    transition: color 150ms ease-in-out;
+  }
+
+  a:hover {
+    color: #7D3365;
+    text-decoration: underline;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #4D0052;
+    outline-offset: 2px;
+  }
+
+  input, textarea, select {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    color: hsla(320, 50%, 15%, 1);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: hsla(320, 15%, 70%, 1);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid hsla(320, 25%, 85%, 1);
+    margin: 2rem 0;
+  }
+}
+
+/* =========================================================
+   Component Utilities
+   ========================================================= */
+
+@layer components {
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    text-decoration: none;
+    min-height: 44px;
+    border: 2px solid transparent;
+  }
+
+  .btn-primary {
+    background-color: #4D0052;
+    color: rgba(255, 255, 255, 0.95);
+    border-color: #4D0052;
+  }
+  .btn-primary:hover {
+    background-color: #7D3365;
+    border-color: #7D3365;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .btn-primary:active { background-color: #3A003D; border-color: #3A003D; }
+
+  .btn-secondary {
+    background-color: #F16A6F;
+    color: rgba(255, 255, 255, 0.95);
+    border-color: #F16A6F;
+  }
+  .btn-secondary:hover {
+    background-color: #C4446D;
+    border-color: #C4446D;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: #4D0052;
+    border-color: #4D0052;
+  }
+  .btn-outline:hover {
+    background-color: rgba(77, 0, 82, 0.05);
+    text-decoration: none;
+    color: #4D0052;
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: #4D0052;
+    border-color: transparent;
+  }
+  .btn-ghost:hover { background-color: rgba(77, 0, 82, 0.05); text-decoration: none; }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #4D0052, #F16A6F);
+    color: rgba(255, 255, 255, 0.95);
+    border-color: transparent;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #7D3365, #C4446D);
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .btn-sm  { padding: 0.5rem 1rem; font-size: 0.875rem; min-height: 36px; }
+  .btn-lg  { padding: 1rem 2rem; font-size: 1.125rem; min-height: 52px; }
+  .btn[disabled], .btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+  /* Cards */
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(77, 0, 82, 0.12);
+    border: 1px solid hsla(320, 25%, 85%, 1);
+  }
+
+  .card-locked {
+    position: relative;
+    border: 2px dashed hsla(320, 25%, 85%, 1);
+    opacity: 0.7;
+    overflow: hidden;
+  }
+
+  /* Form groups */
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsla(320, 50%, 15%, 1);
+  }
+  .form-label.required::after { content: ' *'; color: #F16A6F; }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #FFFFFF;
+    border: 1px solid hsla(320, 25%, 85%, 1);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: hsla(320, 50%, 15%, 1);
+    transition: border-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: #7D3365;
+    box-shadow: 0 0 0 3px rgba(77, 0, 82, 0.12);
+  }
+  .form-input.error  { border-color: #F16A6F; box-shadow: 0 0 0 3px rgba(241, 106, 111, 0.12); }
+  .form-input.valid  { border-color: #8B7AA8; box-shadow: 0 0 0 3px rgba(139, 122, 168, 0.12); }
+
+  .form-hint  { font-size: 0.75rem; color: hsla(320, 30%, 35%, 1); }
+  .form-error { font-size: 0.75rem; color: #F16A6F; display: flex; align-items: center; gap: 0.25rem; }
+
+  /* Alerts */
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border-left: 4px solid;
+  }
+  .alert-success { background-color: #E8E4F0; border-left-color: #8B7AA8; color: hsla(320, 30%, 35%, 1); }
+  .alert-error   { background-color: #FFE8E9; border-left-color: #F16A6F; color: hsla(320, 30%, 35%, 1); }
+  .alert-warning { background-color: #FFF4E6; border-left-color: #E8A87C; color: hsla(320, 30%, 35%, 1); }
+  .alert-info    { background-color: #E5E0F5; border-left-color: #5B4A8E; color: hsla(320, 30%, 35%, 1); }
+
+  /* Badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-primary  { background-color: #4D0052; color: rgba(255, 255, 255, 0.95); }
+  .badge-success  { background-color: #E8E4F0; color: #8B7AA8; }
+  .badge-error    { background-color: #FFE8E9; color: #F16A6F; }
+  .badge-warning  { background-color: #FFF4E6; color: #E8A87C; }
+  .badge-info     { background-color: #E5E0F5; color: #5B4A8E; }
+  .badge-gradient { background: linear-gradient(135deg, #4D0052, #F16A6F); color: rgba(255, 255, 255, 0.95); }
+
+  /* Progress bar */
+  .progress-track {
+    width: 100%;
+    height: 0.5rem;
+    background-color: hsla(320, 20%, 90%, 1);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4D0052, #F16A6F);
+    border-radius: 9999px;
+    transition: width 350ms ease-in-out;
+  }
+
+  /* Navigation links */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    color: hsla(320, 30%, 35%, 1);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 150ms ease-in-out;
+  }
+  .nav-link:hover { color: #4D0052; background-color: rgba(77, 0, 82, 0.05); text-decoration: none; }
+  .nav-link.active {
+    color: #4D0052;
+    background-color: rgba(77, 0, 82, 0.10);
+    font-weight: 600;
+    border-left: 3px solid #4D0052;
+  }
+
+  /* Locked state overlay */
+  .locked-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: inherit;
+    z-index: 10;
+  }
+
+  /* Pagy pagination */
+  .pagy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 1.5rem 0;
+  }
+  .pagy a, .pagy span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 150ms ease-in-out;
+    border: 1px solid hsla(320, 25%, 85%, 1);
+    color: hsla(320, 30%, 35%, 1);
+    background-color: #FFFFFF;
+  }
+  .pagy a:hover {
+    background-color: rgba(77, 0, 82, 0.05);
+    border-color: #7D3365;
+    color: #4D0052;
+    text-decoration: none;
+  }
+  .pagy .current { background-color: #4D0052; color: rgba(255, 255, 255, 0.95); border-color: #4D0052; }
+  .pagy .disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .pagy .gap { border: none; background: transparent; color: hsla(320, 20%, 55%, 1); }
+
+  /* Skip link (accessibility) */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.75rem 1.5rem;
+    background-color: #4D0052;
+    color: rgba(255, 255, 255, 0.95);
+    border-radius: 0 0 12px 12px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .skip-link:focus { top: 0; }
+}
+
+/* =========================================================
+   Animations
+   ========================================================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(1rem); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
