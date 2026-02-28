@@ -1,0 +1,27 @@
+<%# Icon Button - Button with icon only
+Usage: <%= render 'ui/icon_button', icon: 'lucide:settings', aria_label: 'Settings' %>
+%>
+<%
+icon ||= 'lucide:circle'
+variant ||= 'ghost'
+size ||= 'medium'
+aria_label ||= ''
+href ||= nil
+disabled ||= false
+
+size_classes = { 'small' => 'w-8 h-8 text-base', 'medium' => 'w-10 h-10 text-lg', 'large' => 'w-12 h-12 text-xl' }
+variant_classes = {
+  'primary' => 'bg-[#4D0052] text-white hover:bg-[#7D3365]',
+  'secondary' => 'bg-white border-2 border-[#4D0052] text-[#4D0052] hover:bg-[#4D0052]/5',
+  'ghost' => 'text-[hsla(320,50%,15%,1)] hover:bg-[hsla(320,20%,98%,1)]'
+}
+
+element_type = href ? :a : :button
+%>
+<%= content_tag element_type,
+  class: "inline-flex items-center justify-center rounded-lg transition-all duration-250 focus:outline-none focus:ring-2 focus:ring-[#4D0052] focus:ring-offset-2 #{size_classes[size]} #{variant_classes[variant]} #{disabled ? 'opacity-50 cursor-not-allowed' : ''}",
+  href: href,
+  disabled: (disabled unless href),
+  'aria-label': aria_label do %>
+  <iconify-icon icon="<%= icon %>" class="text-current"></iconify-icon>
+<% end %>

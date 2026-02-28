@@ -1,0 +1,171 @@
+<%#
+  Accordion Component - WCAG 2.1 AA Compliant
+  Based on: Radix UI Accordion, Reach UI Accordion
+  Reference: https://www.radix-ui.com/primitives/docs/components/accordion
+
+  Usage:
+    <%= render 'ui/accordion', items: faq_items, allow_multiple: false %>
+
+  Parameters:
+    - items: Array of hashes with :id, :question, :answer
+    - allow_multiple: Boolean (default: false) - Allow multiple items open
+    - default_open: String/Integer - ID of item to open by default
+    - variant: String ('default', 'bordered', 'elevated') - Visual style
+
+  Example:
+    <% items = [
+      { id: 1, question: 'What is JoyMatcher?', answer: 'Trust-based matchmaking...' },
+      { id: 2, question: 'How does pricing work?', answer: 'We offer Free, Premium...' }
+    ] %>
+    <%= render 'ui/accordion', items: items, variant: 'bordered' %>
+%>
+
+<%
+  # Defaults
+  items ||= []
+  allow_multiple ||= false
+  default_open ||= nil
+  variant ||= 'default'
+  accordion_id ||= "accordion-#{SecureRandom.hex(4)}"
+
+  # Variant styles
+  variant_classes = {
+    'default' => 'space-y-2',
+    'bordered' => 'space-y-4 border border-[hsla(320,25%,85%,1)] rounded-lg divide-y divide-[hsla(320,25%,85%,1)]',
+    'elevated' => 'space-y-4'
+  }
+
+  item_classes = {
+    'default' => 'bg-white border border-[hsla(320,25%,85%,1)] rounded-lg',
+    'bordered' => 'bg-white',
+    'elevated' => 'bg-white rounded-lg shadow-[0_2px_8px_rgba(77,0,82,0.08)] hover:shadow-[0_4px_16px_rgba(77,0,82,0.12)] transition-shadow'
+  }
+%>
+
+<div
+  class="<%= variant_classes[variant] %>"
+  data-controller="accordion"
+  data-accordion-allow-multiple-value="<%= allow_multiple %>"
+  role="presentation"
+>
+  <% items.each_with_index do |item, index| %>
+    <%
+      item_id = item[:id] || index
+      header_id = "#{accordion_id}-header-#{item_id}"
+      panel_id = "#{accordion_id}-panel-#{item_id}"
+      is_default_open = (default_open == item_id || default_open == index)
+    %>
+
+    <div class="<%= item_classes[variant] %>" data-accordion-target="item">
+      <%# Accordion Header %>
+      <h3 class="m-0">
+        <button
+          id="<%= header_id %>"
+          type="button"
+          aria-expanded="<%= is_default_open %>"
+          aria-controls="<%= panel_id %>"
+          data-accordion-target="button"
+          data-action="click->accordion#toggle keydown->accordion#handleKeydown"
+          data-item-index="<%= index %>"
+          class="w-full text-left px-6 py-4 flex items-center justify-between font-serif font-semibold text-base text-[hsla(320,50%,15%,1)] hover:bg-[hsla(320,20%,98%,1)] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4D0052] focus:ring-offset-2 <%= variant == 'bordered' ? '' : 'rounded-t-lg' %>"
+        >
+          <span><%= item[:question] %></span>
+
+          <%# Chevron Icon %>
+          <svg
+            class="w-5 h-5 text-[hsla(320,30%,35%,1)] transition-transform duration-250 ease-in-out flex-shrink-0 ml-4"
+            data-accordion-target="icon"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </h3>
+
+      <%# Accordion Panel %>
+      <div
+        id="<%= panel_id %>"
+        role="region"
+        aria-labelledby="<%= header_id %>"
+        data-accordion-target="panel"
+        class="accordion-panel <%= is_default_open ? '' : 'hidden' %>"
+        <%= 'hidden' unless is_default_open %>
+      >
+        <div class="px-6 py-4 text-sm text-[hsla(320,30%,35%,1)] leading-relaxed <%= variant == 'bordered' ? '' : 'rounded-b-lg' %>">
+          <%= item[:answer].html_safe %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%# Stimulus Controller (app/javascript/controllers/accordion_controller.js) %>
+<%#
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["item", "button", "panel", "icon"]
+  static values = { allowMultiple: Boolean }
+
+  toggle(event) {
+    const button = event.currentTarget
+    const index = parseInt(button.dataset.itemIndex)
+    const panel = this.panelTargets[index]
+    const icon = this.iconTargets[index]
+    const isExpanded = button.getAttribute("aria-expanded") === "true"
+
+    if (!this.allowMultipleValue && !isExpanded) {
+      // Close all other panels
+      this.buttonTargets.forEach((btn, i) => {
+        if (i !== index) {
+          btn.setAttribute("aria-expanded", "false")
+          this.panelTargets[i].hidden = true
+          this.panelTargets[i].classList.add("hidden")
+          this.iconTargets[i].style.transform = "rotate(0deg)"
+        }
+      })
+    }
+
+    // Toggle current panel
+    button.setAttribute("aria-expanded", !isExpanded)
+    panel.hidden = isExpanded
+    panel.classList.toggle("hidden")
+    icon.style.transform = isExpanded ? "rotate(0deg)" : "rotate(180deg)"
+  }
+
+  handleKeydown(event) {
+    const currentIndex = parseInt(event.currentTarget.dataset.itemIndex)
+    const totalItems = this.buttonTargets.length
+
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault()
+        const nextIndex = (currentIndex + 1) % totalItems
+        this.buttonTargets[nextIndex].focus()
+        break
+
+      case "ArrowUp":
+        event.preventDefault()
+        const prevIndex = (currentIndex - 1 + totalItems) % totalItems
+        this.buttonTargets[prevIndex].focus()
+        break
+
+      case "Home":
+        event.preventDefault()
+        this.buttonTargets[0].focus()
+        break
+
+      case "End":
+        event.preventDefault()
+        this.buttonTargets[totalItems - 1].focus()
+        break
+    }
+  }
+}
+%>

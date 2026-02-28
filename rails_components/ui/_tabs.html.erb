@@ -1,0 +1,56 @@
+<%# Tabs - Tabbed content (Interests page pattern)
+Usage: <%= render 'ui/tabs', tabs: [
+  { id: 'sent', label: 'Sent', count: 5 },
+  { id: 'received', label: 'Received', count: 12 }
+], active: 'sent' %>
+%>
+<%
+tabs ||= []
+active ||= tabs.first[:id]
+variant ||= 'underline'
+%>
+<div data-controller="tabs" data-tabs-active-value="<%= active %>">
+  <div class="border-b border-[hsla(320,25%,85%,1)]" role="tablist">
+    <nav class="flex gap-8" aria-label="Tabs">
+      <% tabs.each do |tab| %>
+        <%
+          is_active = (tab[:id] == active)
+          tab_classes = is_active ?
+            'border-b-2 border-[#4D0052] text-[#4D0052]' :
+            'border-b-2 border-transparent text-[hsla(320,30%,35%,1)] hover:text-[#4D0052] hover:border-[hsla(320,25%,85%,1)]'
+        %>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="<%= is_active %>"
+          aria-controls="panel-<%= tab[:id] %>"
+          data-tabs-target="tab"
+          data-tab-id="<%= tab[:id] %>"
+          data-action="click->tabs#switch"
+          class="pb-4 px-1 text-sm font-serif font-semibold <%= tab_classes %> transition-colors"
+        >
+          <%= tab[:label] %>
+          <% if tab[:count] %>
+            <span class="ml-2 px-2 py-0.5 bg-[hsla(320,20%,95%,1)] text-[hsla(320,50%,15%,1)] rounded-full text-xs">
+              <%= tab[:count] %>
+            </span>
+          <% end %>
+        </button>
+      <% end %>
+    </nav>
+  </div>
+
+  <div class="mt-6">
+    <% tabs.each do |tab| %>
+      <div
+        id="panel-<%= tab[:id] %>"
+        role="tabpanel"
+        data-tabs-target="panel"
+        data-panel-id="<%= tab[:id] %>"
+        class="<%= tab[:id] == active ? '' : 'hidden' %>"
+      >
+        <%= yield tab[:id] if block_given? %>
+      </div>
+    <% end %>
+  </div>
+</div>

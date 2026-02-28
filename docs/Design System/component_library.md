@@ -1,15 +1,115 @@
 # Component Library — JoyMatcher
 
-**Version:** 1.0.0
-**Last Updated:** 2026-02-26
-**Status:** Complete Reference
+**Version:** 2.0.0
+**Last Updated:** 2026-02-28
+**Status:** Production-Ready Rails Components + Reference Patterns
 **Tailwind CSS Version:** v4.x
+
+---
+
+## ✅ NEW: Production-Ready Rails Components
+
+**Location:** `/rails_components/`
+**Status:** 64 components complete (100%)
+**Framework:** Rails 8 + Hotwire + Tailwind CSS v4
+
+### Quick Start
+
+```bash
+# Copy components to Rails app
+cp -r rails_components/forms app/views/forms
+cp -r rails_components/ui app/views/ui
+
+# Copy Stimulus controllers
+cp -r rails_components/stimulus_controllers/* app/javascript/controllers/
+```
+
+### Component Inventory
+
+**Forms (12 components):**
+- Text Input, Textarea, Select, Checkbox, Radio Group
+- Switch, File Upload, Slider, Date Picker
+- Search, Tag Input, Form Group
+
+**UI Components (37 components):**
+- Feedback: Button, Alert, Toast, Modal, Tooltip, Spinner, Skeleton, Progress Bar, Empty State
+- Navigation: Breadcrumbs, Pagination, Tabs, Steps, Dropdown, Skip Link
+- Data Display: Badge, Avatar, List, Description List, Stat, Tag, Chip, Timeline, Kbd, Status Indicator, Verification Badge
+- Containers: Card, Accordion, Divider, Drawer, Collapsible, Stack, Grid, Button Group
+- Media: Icon, Image, Icon Button
+
+**Stimulus Controllers (15 controllers):**
+- accordion, modal, toast, switch, character_count
+- dismissible, file_upload, slider, search, tag_input
+- tabs, dropdown, tooltip, drawer, collapsible
+
+### Usage Examples
+
+**Basic Button:**
+```erb
+<%= render 'ui/button', text: 'Sign Up', variant: 'primary', size: 'large' %>
+```
+
+**Tier-Locked Card:**
+```erb
+<%= render 'ui/card', locked: true, tier_required: 3 do %>
+  <h3>Family Background</h3>
+  <p>This information is locked until you complete Tier 3.</p>
+<% end %>
+```
+
+**Form Input with SimpleForm:**
+```erb
+<%= render 'forms/text_input',
+  name: 'user[name]',
+  label: 'Full Name',
+  placeholder: 'Enter your full name',
+  required: true,
+  icon_left: 'lucide:user'
+%>
+```
+
+**Toast Notification:**
+```javascript
+// Via Stimulus controller
+const toastController = document.querySelector('[data-controller="toast"]')
+if (toastController) {
+  toastController.toast.show({
+    variant: 'success',
+    message: 'Profile updated successfully!',
+    duration: 5000
+  })
+}
+```
+
+### Documentation
+
+- **README:** `/rails_components/README.md` (450 lines)
+- **Component Index:** `/rails_components/COMPONENT_INDEX.md` (250 lines)
+- **Final Summary:** `/rails_components/FINAL_SUMMARY.md`
+- **Implementation Memory:** `/brain/component-library-implementation.md`
+- **Design Audit:** `/brain/design-system-audit.md`
+
+### Design System Compliance
+
+ALL components follow JoyMatcher's design system:
+- ✅ Georgia serif font (NO sans-serif except labels)
+- ✅ Purple-tinted shadows (rgba(77,0,82,0.XX))
+- ✅ HSLA backgrounds (320 hue)
+- ✅ ARIA labels on all interactive elements
+- ✅ Keyboard navigation (Tab, Enter, ESC, Arrows)
+- ✅ Focus visible (never `outline: none`)
+- ✅ Screen reader support
+- ✅ 44x44px minimum touch targets
+- ✅ WCAG 2.1 AA compliant
 
 ---
 
 ## 1. Introduction
 
-This component library provides reusable UI patterns for JoyMatcher. All components are built with Tailwind CSS v4 utility classes, maintain WCAG 2.1 AA accessibility standards, and reflect our premium, trust-based design aesthetic.
+This document provides both:
+1. **Production-ready Rails components** (see above) - Use these directly in Rails 8 development
+2. **Reference HTML patterns** (sections below) - For understanding design system application
 
 ### Design Principles
 

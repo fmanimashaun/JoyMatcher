@@ -1,0 +1,20 @@
+<%# Verification Badge - JoyMatcher custom tier verification
+Usage: <%= render 'ui/verification_badge', tier: 5, type: 'id_verified' %>
+%>
+<%
+tier ||= 1
+type ||= 'tier_complete'
+
+badge_config = {
+  'tier_complete' => { icon: 'lucide:check-circle', color: 'text-[#8B7AA8]', label: "Tier #{tier} Complete" },
+  'id_verified' => { icon: 'lucide:shield-check', color: 'text-[#4D0052]', label: 'ID Verified' },
+  'premium' => { icon: 'lucide:star', color: 'text-[#4D0052]', label: 'Premium' },
+  'vip' => { icon: 'lucide:crown', color: 'text-[#F16A6F]', label: 'VIP' }
+}
+
+config = badge_config[type]
+%>
+<span class="inline-flex items-center gap-1 px-2 py-1 bg-white border border-[hsla(320,25%,85%,1)] rounded-full shadow-sm">
+  <iconify-icon icon="<%= config[:icon] %>" class="text-sm <%= config[:color] %>"></iconify-icon>
+  <span class="text-xs font-sans font-semibold <%= config[:color] %>"><%= config[:label] %></span>
+</span>

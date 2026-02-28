@@ -1,0 +1,156 @@
+<%#
+  Avatar Component - User Profile Image
+  Based on: Radix UI Avatar, Polaris Avatar
+  Reference: https://www.radix-ui.com/primitives/docs/components/avatar
+
+  Usage:
+    <%= render 'ui/avatar', src: user.avatar_url, name: user.name %>
+    <%= render 'ui/avatar', initials: 'AO', size: 'large', variant: 'premium' %>
+
+  Parameters:
+    - src: String - Image URL
+    - name: String - User name (for alt text + initials fallback)
+    - initials: String - Custom initials (auto-generated from name if not provided)
+    - size: String ('xs', 'small', 'medium', 'large', 'xl', '2xl') - Avatar size
+    - variant: String ('default', 'premium', 'vip', 'verified') - Visual style
+    - shape: String ('circle', 'square') - Avatar shape
+    - status: String (nil, 'online', 'offline', 'busy', 'away') - Status indicator
+    - badge: String - Lucide icon for badge overlay (e.g., 'lucide:check-circle')
+
+  Examples:
+    <%# Basic Avatar %>
+    <%= render 'ui/avatar', src: @user.avatar_url, name: @user.name %>
+
+    <%# Initials Fallback %>
+    <%= render 'ui/avatar', name: 'Amara Okonkwo', size: 'large' %>
+
+    <%# Premium Avatar with Badge %>
+    <%= render 'ui/avatar',
+      src: @user.avatar_url,
+      name: @user.name,
+      variant: 'premium',
+      badge: 'lucide:check-circle'
+    %>
+
+    <%# VIP Avatar with Online Status %>
+    <%= render 'ui/avatar',
+      src: @user.avatar_url,
+      name: @user.name,
+      size: 'xl',
+      variant: 'vip',
+      status: 'online'
+    %>
+
+    <%# Square Avatar %>
+    <%= render 'ui/avatar', src: @company.logo, name: @company.name, shape: 'square' %>
+%>
+
+<%
+  # Defaults
+  src ||= nil
+  name ||= 'User'
+  initials ||= nil
+  size ||= 'medium'
+  variant ||= 'default'
+  shape ||= 'circle'
+  status ||= nil
+  badge ||= nil
+
+  # Generate initials from name if not provided
+  if initials.nil? && name
+    initials = name.split(' ').map { |n| n[0] }.join('').upcase[0..1]
+  end
+
+  # Size styles
+  size_classes = {
+    'xs' => 'w-6 h-6 text-xs',
+    'small' => 'w-8 h-8 text-sm',
+    'medium' => 'w-10 h-10 text-base',
+    'large' => 'w-12 h-12 text-lg',
+    'xl' => 'w-16 h-16 text-xl',
+    '2xl' => 'w-20 h-20 text-2xl'
+  }
+
+  # Variant styles
+  variant_classes = {
+    'default' => 'bg-[hsla(320,20%,90%,1)] text-[hsla(320,50%,15%,1)] border-2 border-[hsla(320,25%,85%,1)]',
+    'premium' => 'bg-gradient-to-br from-[#4D0052] to-[#7D3365] text-white/95 border-2 border-[#4D0052]',
+    'vip' => 'bg-gradient-to-br from-[#4D0052] to-[#F16A6F] text-white/95 border-2 border-[#F16A6F] shadow-[0_4px_16px_rgba(77,0,82,0.12)]',
+    'verified' => 'bg-[#E8E4F0] text-[#8B7AA8] border-2 border-[#8B7AA8]'
+  }
+
+  # Shape styles
+  shape_class = shape == 'circle' ? 'rounded-full' : 'rounded-lg'
+
+  # Status indicator styles
+  status_colors = {
+    'online' => 'bg-green-500',
+    'offline' => 'bg-gray-400',
+    'busy' => 'bg-red-500',
+    'away' => 'bg-yellow-500'
+  }
+
+  # Status indicator sizes
+  status_sizes = {
+    'xs' => 'w-1.5 h-1.5 border',
+    'small' => 'w-2 h-2 border',
+    'medium' => 'w-2.5 h-2.5 border-2',
+    'large' => 'w-3 h-3 border-2',
+    'xl' => 'w-4 h-4 border-2',
+    '2xl' => 'w-5 h-5 border-2'
+  }
+
+  # Combined classes
+  avatar_classes = [
+    size_classes[size],
+    variant_classes[variant],
+    shape_class,
+    'inline-flex items-center justify-center font-sans font-semibold flex-shrink-0 overflow-hidden'
+  ].join(' ')
+%>
+
+<span class="relative inline-block">
+  <%# Avatar Container %>
+  <span class="<%= avatar_classes %>" role="img" aria-label="<%= name %>'s avatar">
+    <% if src.present? %>
+      <%# Image %>
+      <img
+        src="<%= src %>"
+        alt="<%= name %>"
+        class="w-full h-full object-cover"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <%# Initials Fallback (hidden unless image fails) %>
+      <span class="w-full h-full hidden items-center justify-center" style="display: none;">
+        <%= initials %>
+      </span>
+    <% else %>
+      <%# Initials Only %>
+      <%= initials %>
+    <% end %>
+  </span>
+
+  <%# Status Indicator %>
+  <% if status %>
+    <span
+      class="absolute bottom-0 right-0 <%= status_sizes[size] %> <%= status_colors[status] %> border-white rounded-full"
+      role="status"
+      aria-label="<%= status.capitalize %>"
+    ></span>
+  <% end %>
+
+  <%# Badge Overlay (e.g., Verification Check) %>
+  <% if badge %>
+    <span
+      class="absolute -bottom-0.5 -right-0.5 bg-white rounded-full p-0.5 shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+      aria-label="Verified"
+    >
+      <iconify-icon
+        icon="<%= badge %>"
+        class="text-[#8B7AA8] <%= size == 'xs' || size == 'small' ? 'text-xs' : 'text-sm' %>"
+        aria-hidden="true"
+      ></iconify-icon>
+    </span>
+  <% end %>
+</span>

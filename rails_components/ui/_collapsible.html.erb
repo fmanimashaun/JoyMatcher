@@ -1,0 +1,18 @@
+<%# Collapsible - Single collapsible section
+Usage: <%= render 'ui/collapsible', trigger: 'Show more' do %>
+  <p>Hidden content...</p>
+<% end %>
+%>
+<%
+trigger ||= 'Show more'
+default_open ||= false
+%>
+<div data-controller="collapsible">
+  <button type="button" data-collapsible-target="trigger" data-action="click->collapsible#toggle" class="flex items-center gap-2 text-sm font-sans font-semibold text-[#4D0052] hover:text-[#7D3365] transition-colors">
+    <span><%= trigger %></span>
+    <iconify-icon icon="lucide:chevron-down" data-collapsible-target="icon" class="text-base transition-transform <%= default_open ? 'rotate-180' : '' %>"></iconify-icon>
+  </button>
+  <div data-collapsible-target="content" class="mt-3 <%= default_open ? '' : 'hidden' %>">
+    <%= yield %>
+  </div>
+</div>

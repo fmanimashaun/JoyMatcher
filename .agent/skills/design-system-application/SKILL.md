@@ -31,7 +31,65 @@ Apply JoyMatcher design system consistently. Brand identity: trust-focused relat
 - **Headings:** Playfair Display (serif)
 - **Body:** Inter (sans-serif)
 
-## Locked State Pattern
+## Rails Component Library
+
+**Location:** `/rails_components/`
+**Status:** 64 components complete (100%)
+
+### Quick Usage
+
+```erb
+<%# Button %>
+<%= render 'ui/button', text: 'Sign Up', variant: 'primary', size: 'large' %>
+
+<%# Tier-Locked Card %>
+<%= render 'ui/card', locked: true, tier_required: 3 do %>
+  <h3>Family Background</h3>
+  <p>This information is locked until you complete Tier 3.</p>
+<% end %>
+
+<%# Form Input %>
+<%= render 'forms/text_input',
+  name: 'user[name]',
+  label: 'Full Name',
+  placeholder: 'Enter your full name',
+  required: true,
+  icon_left: 'lucide:user'
+%>
+
+<%# Progress Bar %>
+<%= render 'ui/progress_bar',
+  value: @user.tier_completion_percentage,
+  label: 'Profile Completion',
+  variant: 'premium'
+%>
+
+<%# Toast Notification %>
+<script>
+  const toastController = document.querySelector('[data-controller="toast"]')
+  toastController.toast.show({
+    variant: 'success',
+    message: 'Profile updated successfully!',
+    duration: 5000
+  })
+</script>
+```
+
+### Component Categories
+
+**Forms (12):** text_input, textarea, select, checkbox, radio_group, switch, file_upload, slider, date_picker, search, tag_input, form_group
+
+**UI (37):** button, card, accordion, modal, toast, alert, badge, avatar, progress_bar, breadcrumbs, pagination, tabs, steps, dropdown, tooltip, skip_link, spinner, skeleton, list, description_list, stat, tag, chip, timeline, kbd, empty_state, divider, drawer, collapsible, stack, grid, icon_button, button_group, image, icon, status_indicator, verification_badge
+
+**Stimulus (15):** accordion, modal, toast, switch, character_count, dismissible, file_upload, slider, search, tag_input, tabs, dropdown, tooltip, drawer, collapsible
+
+### Documentation
+
+- README: `/rails_components/README.md`
+- Component Index: `/rails_components/COMPONENT_INDEX.md`
+- Final Summary: `/rails_components/FINAL_SUMMARY.md`
+
+## Locked State Pattern (React Prototype)
 
 ```javascript
 <div className="relative">

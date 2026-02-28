@@ -1,0 +1,170 @@
+<%#
+  Card Component - Flexible Container with Tier Lock Support
+  Based on: Shopify Polaris Card, Material Design Card
+  Reference: https://polaris.shopify.com/components/card
+
+  Usage:
+    <%= render 'ui/card', variant: 'elevated' do %>
+      <h3>Profile Information</h3>
+      <p>Details here...</p>
+    <% end %>
+
+  Parameters:
+    - variant: String ('default', 'elevated', 'gradient', 'subtle') - Visual style
+    - padding: String ('tight', 'default', 'loose', 'none') - Internal padding
+    - hover: Boolean (default: false) - Add hover shadow effect
+    - clickable: Boolean (default: false) - Add cursor pointer
+    - locked: Boolean (default: false) - Show locked overlay
+    - tier_required: Integer - Tier number required to unlock
+    - as: String ('div', 'article', 'section') - HTML element type
+    - role: String - ARIA role
+    - aria_labelledby: String - ID of label element
+
+  Compound Components (use content_for):
+    - :card_header - Header section
+    - :card_footer - Footer section
+
+  Examples:
+    <%# Basic Card %>
+    <%= render 'ui/card' do %>
+      <p>Card content</p>
+    <% end %>
+
+    <%# Elevated Card with Header %>
+    <%= render 'ui/card', variant: 'elevated', padding: 'default' do %>
+      <% content_for :card_header do %>
+        <h3 class="text-lg font-semibold">Profile Details</h3>
+      <% end %>
+
+      <p>Your profile information...</p>
+
+      <% content_for :card_footer do %>
+        <%= render 'ui/button', text: 'Edit Profile', variant: 'secondary', size: 'small' %>
+      <% end %>
+    <% end %>
+
+    <%# Locked Tier Card %>
+    <%= render 'ui/card', variant: 'elevated', locked: true, tier_required: 3 do %>
+      <h3>Family Background</h3>
+      <p>This information is locked until you complete Tier 3.</p>
+    <% end %>
+
+    <%# Clickable Profile Card %>
+    <%= render 'ui/card', variant: 'elevated', hover: true, clickable: true, as: 'article' do %>
+      <%= image_tag 'profile.jpg', class: 'w-full h-48 object-cover rounded-t-lg' %>
+      <div class="p-4">
+        <h3>Amara O.</h3>
+        <p>Lagos, Nigeria</p>
+      </div>
+    <% end %>
+%>
+
+<%
+  # Defaults
+  variant ||= 'default'
+  padding ||= 'default'
+  hover ||= false
+  clickable ||= false
+  locked ||= false
+  tier_required ||= nil
+  as ||= 'div'
+  role ||= nil
+  aria_labelledby ||= nil
+  card_id ||= "card-#{SecureRandom.hex(4)}"
+
+  # Variant styles
+  variant_classes = {
+    'default' => 'bg-white border border-[hsla(320,25%,85%,1)]',
+    'elevated' => 'bg-white shadow-[0_2px_8px_rgba(77,0,82,0.08)]',
+    'gradient' => 'bg-gradient-to-br from-[#4D0052] to-[#F16A6F] text-white/95',
+    'subtle' => 'bg-[hsla(320,20%,98%,1)]'
+  }
+
+  # Padding styles
+  padding_classes = {
+    'tight' => 'p-4',
+    'default' => 'p-6',
+    'loose' => 'p-8',
+    'none' => 'p-0'
+  }
+
+  # Hover effect
+  hover_class = hover ? 'hover:shadow-[0_4px_16px_rgba(77,0,82,0.12)] transition-shadow duration-250' : ''
+
+  # Clickable cursor
+  clickable_class = clickable ? 'cursor-pointer' : ''
+
+  # Combined classes
+  card_classes = [
+    'rounded-xl',
+    'overflow-hidden',
+    variant_classes[variant],
+    padding_classes[padding],
+    hover_class,
+    clickable_class
+  ].join(' ')
+
+  # HTML attributes
+  html_attrs = {
+    id: card_id,
+    class: card_classes,
+    role: role,
+    'aria-labelledby': aria_labelledby
+  }.compact
+%>
+
+<%= content_tag as, **html_attrs do %>
+  <%# Card Header (Optional) %>
+  <% if content_for?(:card_header) %>
+    <div class="card-header border-b border-[hsla(320,25%,85%,1)] pb-4 mb-4">
+      <%= yield :card_header %>
+    </div>
+  <% end %>
+
+  <%# Card Body %>
+  <div class="card-body <%= locked ? 'relative' : '' %>">
+    <%# Locked Overlay %>
+    <% if locked %>
+      <%# Blurred content %>
+      <div class="blur-sm pointer-events-none select-none" aria-hidden="true">
+        <%= yield %>
+      </div>
+
+      <%# Lock Overlay %>
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm"
+        role="region"
+        aria-live="polite"
+        aria-label="Locked content - Tier <%= tier_required %> required"
+      >
+        <div class="bg-white border-2 border-dashed border-[#4D0052] rounded-lg p-6 max-w-xs text-center shadow-[0_4px_16px_rgba(77,0,82,0.12)]">
+          <%# Lock Icon %>
+          <div class="w-12 h-12 mx-auto mb-4 bg-[#4D0052]/10 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-[#4D0052]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+
+          <h3 class="font-serif text-lg font-semibold text-[hsla(320,50%,15%,1)] mb-2">
+            Tier <%= tier_required %> Required
+          </h3>
+
+          <p class="text-sm text-[hsla(320,30%,35%,1)] mb-4">
+            Complete your Tier <%= tier_required %> to view this information.
+          </p>
+
+          <%= render 'ui/button', text: 'Complete Tier', variant: 'primary', size: 'small', href: '/app/tier-completion' %>
+        </div>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
+  </div>
+
+  <%# Card Footer (Optional) %>
+  <% if content_for?(:card_footer) %>
+    <div class="card-footer border-t border-[hsla(320,25%,85%,1)] pt-4 mt-4 flex items-center justify-end gap-3">
+      <%= yield :card_footer %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,130 @@
+<%#
+  Badge Component - Status and Label Indicator
+  Based on: Shopify Polaris Badge, GitHub Primer Label
+  Reference: https://polaris.shopify.com/components/badge
+
+  Usage:
+    <%= render 'ui/badge', text: 'Verified', variant: 'success' %>
+    <%= render 'ui/badge', variant: 'premium', icon: 'lucide:check-circle' do %>
+      Premium Member
+    <% end %>
+
+  Parameters:
+    - text: String - Badge label (or use block content)
+    - variant: String ('default', 'success', 'error', 'warning', 'info', 'premium', 'vip') - Visual style
+    - size: String ('small', 'medium', 'large') - Badge size
+    - icon: String - Lucide icon name (left icon)
+    - dot: Boolean (default: false) - Show status dot instead of full badge
+    - removable: Boolean (default: false) - Show remove button
+    - pill: Boolean (default: true) - Fully rounded (false = slightly rounded)
+
+  Examples:
+    <%# Verification Badge %>
+    <%= render 'ui/badge', text: 'Verified', variant: 'success', icon: 'lucide:check-circle' %>
+
+    <%# Subscription Badge %>
+    <%= render 'ui/badge', text: 'Premium', variant: 'premium', size: 'medium' %>
+
+    <%# Tier Badge %>
+    <%= render 'ui/badge', text: 'Tier 3 Complete', variant: 'info' %>
+
+    <%# Status Dot %>
+    <%= render 'ui/badge', variant: 'success', dot: true %>
+
+    <%# Removable Tag %>
+    <%= render 'ui/badge', text: 'Photography', variant: 'default', removable: true %>
+
+    <%# VIP Badge %>
+    <%= render 'ui/badge', variant: 'vip', icon: 'lucide:crown' do %>
+      VIP Member
+    <% end %>
+%>
+
+<%
+  # Defaults
+  text ||= nil
+  variant ||= 'default'
+  size ||= 'medium'
+  icon ||= nil
+  dot ||= false
+  removable ||= false
+  pill ||= true
+
+  # Variant styles
+  variant_styles = {
+    'default' => 'bg-[hsla(320,20%,95%,1)] text-[hsla(320,30%,35%,1)] border-[hsla(320,25%,85%,1)]',
+    'success' => 'bg-[#E8E4F0] text-[#8B7AA8] border-[#8B7AA8]/20',
+    'error' => 'bg-[#FFE8E9] text-[#F16A6F] border-[#F16A6F]/20',
+    'warning' => 'bg-[#FFF4E6] text-[#E8A87C] border-[#E8A87C]/20',
+    'info' => 'bg-[#E5E0F5] text-[#5B4A8E] border-[#5B4A8E]/20',
+    'premium' => 'bg-gradient-to-br from-[#4D0052] to-[#7D3365] text-white/95 border-[#4D0052]',
+    'vip' => 'bg-gradient-to-br from-[#4D0052] to-[#F16A6F] text-white/95 border-[#F16A6F] shadow-[0_2px_8px_rgba(77,0,82,0.12)]'
+  }
+
+  # Size styles
+  size_styles = {
+    'small' => 'px-2 py-0.5 text-xs gap-1',
+    'medium' => 'px-3 py-1 text-sm gap-1.5',
+    'large' => 'px-4 py-1.5 text-base gap-2'
+  }
+
+  # Dot variant
+  dot_sizes = {
+    'small' => 'w-2 h-2',
+    'medium' => 'w-2.5 h-2.5',
+    'large' => 'w-3 h-3'
+  }
+
+  # Base styles
+  base_styles = 'inline-flex items-center font-sans font-semibold border whitespace-nowrap'
+  radius_class = pill ? 'rounded-full' : 'rounded-lg'
+
+  # Combined classes
+  if dot
+    badge_classes = [dot_sizes[size], 'rounded-full', variant_styles[variant].split(' ').first].join(' ')
+  else
+    badge_classes = [
+      base_styles,
+      variant_styles[variant],
+      size_styles[size],
+      radius_class
+    ].join(' ')
+  end
+%>
+
+<% if dot %>
+  <%# Status Dot Only %>
+  <span
+    class="<%= badge_classes %>"
+    role="status"
+    aria-label="<%= variant %> status"
+  ></span>
+<% else %>
+  <%# Full Badge %>
+  <span class="<%= badge_classes %>" role="status">
+    <%# Icon %>
+    <% if icon %>
+      <iconify-icon icon="<%= icon %>" class="text-current" aria-hidden="true"></iconify-icon>
+    <% end %>
+
+    <%# Text Content %>
+    <% if block_given? %>
+      <%= yield %>
+    <% elsif text %>
+      <%= text %>
+    <% end %>
+
+    <%# Remove Button %>
+    <% if removable %>
+      <button
+        type="button"
+        class="ml-1 -mr-1 p-0.5 rounded-full hover:bg-black/10 transition-colors focus:outline-none focus:ring-1 focus:ring-current"
+        aria-label="Remove <%= text %>"
+      >
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    <% end %>
+  </span>
+<% end %>

@@ -1,0 +1,22 @@
+<%# Description List - Key-value pairs
+Usage: <%= render 'ui/description_list', items: [
+  { term: 'Location', description: 'Lagos, Nigeria' },
+  { term: 'Age', description: '29' }
+] %>
+%>
+<%
+items ||= []
+variant ||= 'horizontal'
+%>
+<dl class="<%= variant == 'horizontal' ? 'divide-y divide-[hsla(320,25%,85%,1)]' : 'space-y-4' %>">
+  <% items.each do |item| %>
+    <div class="<%= variant == 'horizontal' ? 'flex items-center justify-between py-3' : '' %>">
+      <dt class="text-sm font-sans font-semibold text-[hsla(320,50%,15%,1)] <%= variant == 'horizontal' ? '' : 'mb-1' %>">
+        <%= item[:term] %>
+      </dt>
+      <dd class="text-sm font-sans text-[hsla(320,30%,35%,1)]">
+        <%= item[:description] %>
+      </dd>
+    </div>
+  <% end %>
+</dl>

@@ -1,0 +1,12 @@
+<%# Button Group - Group of related buttons
+Usage: <%= render 'ui/button_group' do %>
+  <%= render 'ui/button', text: 'Left' %>
+  <%= render 'ui/button', text: 'Right' %>
+<% end %>
+%>
+<%
+orientation ||= 'horizontal'
+%>
+<div class="inline-flex <%= orientation == 'horizontal' ? 'flex-row' : 'flex-col' %> rounded-lg border border-[hsla(320,25%,85%,1)] overflow-hidden">
+  <%= yield %>
+</div>

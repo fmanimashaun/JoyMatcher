@@ -1,0 +1,19 @@
+<%# Image - Responsive image with loading
+Usage: <%= render 'ui/image', src: '/photo.jpg', alt: 'Profile', aspect: '1/1' %>
+%>
+<%
+src ||= ''
+alt ||= ''
+aspect ||= nil
+rounded ||= 'lg'
+loading ||= 'lazy'
+
+rounded_classes = { 'none' => '', 'sm' => 'rounded', 'md' => 'rounded-lg', 'lg' => 'rounded-xl', 'full' => 'rounded-full' }
+aspect_classes = { '1/1' => 'aspect-square', '16/9' => 'aspect-video', '4/3' => 'aspect-4/3' }
+%>
+<img
+  src="<%= src %>"
+  alt="<%= alt %>"
+  loading="<%= loading %>"
+  class="w-full <%= aspect ? aspect_classes[aspect] : '' %> object-cover <%= rounded_classes[rounded] %>"
+/>

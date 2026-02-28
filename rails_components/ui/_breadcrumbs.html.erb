@@ -1,0 +1,31 @@
+<%# Breadcrumbs - Navigation path
+Usage: <%= render 'ui/breadcrumbs', items: [
+  { label: 'Home', href: '/' },
+  { label: 'Profile', href: '/profile' },
+  { label: 'Edit' }
+] %>
+%>
+<%
+items ||= []
+separator ||= 'lucide:chevron-right'
+%>
+<nav aria-label="Breadcrumb">
+  <ol class="flex items-center gap-2 text-sm font-sans">
+    <% items.each_with_index do |item, index| %>
+      <li class="flex items-center gap-2">
+        <% if item[:href] && index < items.length - 1 %>
+          <a href="<%= item[:href] %>" class="text-[hsla(320,30%,35%,1)] hover:text-[#4D0052] transition-colors">
+            <%= item[:label] %>
+          </a>
+        <% else %>
+          <span class="text-[hsla(320,50%,15%,1)] font-semibold" aria-current="page">
+            <%= item[:label] %>
+          </span>
+        <% end %>
+        <% if index < items.length - 1 %>
+          <iconify-icon icon="<%= separator %>" class="text-[hsla(320,30%,35%,1)]" aria-hidden="true"></iconify-icon>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>

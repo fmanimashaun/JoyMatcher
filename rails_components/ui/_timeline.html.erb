@@ -1,0 +1,36 @@
+<%# Timeline - Event timeline
+Usage: <%= render 'ui/timeline', events: [
+  { title: 'Tier 1 Complete', time: '2 hours ago', icon: 'lucide:check' },
+  { title: 'Profile Created', time: '1 day ago' }
+] %>
+%>
+<%
+events ||= []
+%>
+<div class="space-y-6">
+  <% events.each_with_index do |event, index| %>
+    <div class="relative flex gap-4">
+      <% if index < events.length - 1 %>
+        <div class="absolute left-4 top-8 bottom-0 w-0.5 bg-[hsla(320,25%,85%,1)]"></div>
+      <% end %>
+
+      <div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full <%= event[:icon] ? 'bg-[#4D0052]' : 'bg-[hsla(320,20%,95%,1)]' %> flex-shrink-0">
+        <% if event[:icon] %>
+          <iconify-icon icon="<%= event[:icon] %>" class="text-sm text-white"></iconify-icon>
+        <% else %>
+          <span class="w-2 h-2 bg-[#4D0052] rounded-full"></span>
+        <% end %>
+      </div>
+
+      <div class="flex-1 pt-0.5">
+        <h4 class="text-sm font-serif font-semibold text-[hsla(320,50%,15%,1)]"><%= event[:title] %></h4>
+        <% if event[:description] %>
+          <p class="text-sm font-sans text-[hsla(320,30%,35%,1)] mt-1"><%= event[:description] %></p>
+        <% end %>
+        <% if event[:time] %>
+          <span class="text-xs font-sans text-[hsla(320,30%,35%,1)] mt-1 block"><%= event[:time] %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

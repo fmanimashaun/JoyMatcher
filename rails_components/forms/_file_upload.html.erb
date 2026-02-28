@@ -1,0 +1,102 @@
+<%#
+  File Upload Component - Drag & Drop File Input
+  Based on: Shopify Polaris DropZone, Material File Upload
+
+  Usage:
+    <%= render 'forms/file_upload',
+      name: 'user[avatar]',
+      label: 'Profile Photo',
+      accept: 'image/*',
+      max_size: 10
+    %>
+
+  Parameters:
+    - name: String (required)
+    - label: String
+    - accept: String - File types (e.g., 'image/*', '.pdf,.doc')
+    - max_size: Integer - Max file size in MB
+    - multiple: Boolean - Allow multiple files
+    - required: Boolean
+    - disabled: Boolean
+    - error: String
+    - help_text: String
+    - preview: Boolean (default: true) - Show image preview
+%>
+
+<%
+  name ||= nil
+  label ||= nil
+  accept ||= nil
+  max_size ||= 10
+  multiple ||= false
+  required ||= false
+  disabled ||= false
+  error ||= nil
+  help_text ||= nil
+  preview ||= true
+
+  input_id = "file-upload-#{name.gsub(/[\[\]]/, '-')}"
+  has_error = error.present?
+  border_class = has_error ? 'border-[#F16A6F]' : 'border-[hsla(320,25%,85%,1)]'
+%>
+
+<div class="w-full" data-controller="file-upload" data-file-upload-max-size-value="<%= max_size %>">
+  <% if label %>
+    <label class="block text-sm font-serif font-semibold text-[hsla(320,50%,15%,1)] mb-2">
+      <%= label %>
+      <% if required %>
+        <span class="text-[#F16A6F]" aria-label="required">*</span>
+      <% end %>
+    </label>
+  <% end %>
+
+  <div
+    class="border-2 border-dashed <%= border_class %> rounded-lg p-8 text-center transition-colors hover:border-[#4D0052] hover:bg-[hsla(320,20%,98%,1)] cursor-pointer"
+    data-file-upload-target="dropzone"
+    data-action="
+      dragover->file-upload#dragOver
+      dragleave->file-upload#dragLeave
+      drop->file-upload#drop
+      click->file-upload#clickInput
+    "
+  >
+    <div data-file-upload-target="placeholder">
+      <iconify-icon icon="lucide:upload-cloud" class="text-4xl text-[hsla(320,30%,35%,1)] mx-auto mb-4"></iconify-icon>
+      <p class="text-sm font-sans text-[hsla(320,50%,15%,1)] font-semibold mb-1">
+        Drop files here or click to browse
+      </p>
+      <p class="text-sm font-sans text-[hsla(320,30%,35%,1)]">
+        <%= accept ? "Accepts: #{accept}" : "All file types" %> • Max <%= max_size %>MB
+      </p>
+    </div>
+
+    <% if preview %>
+      <div data-file-upload-target="preview" class="hidden mt-4">
+        <img data-file-upload-target="previewImage" class="max-w-xs mx-auto rounded-lg" alt="Preview" />
+      </div>
+    <% end %>
+
+    <div data-file-upload-target="fileName" class="hidden mt-4 text-sm font-sans text-[hsla(320,50%,15%,1)]"></div>
+  </div>
+
+  <input
+    type="file"
+    id="<%= input_id %>"
+    name="<%= name %>"
+    <%= "accept=\"#{accept}\"" if accept %>
+    <%= 'multiple' if multiple %>
+    <%= 'required' if required %>
+    <%= 'disabled' if disabled %>
+    data-file-upload-target="input"
+    data-action="change->file-upload#handleFiles"
+    class="sr-only"
+  />
+
+  <% if has_error %>
+    <p class="mt-2 text-sm text-[#F16A6F] font-sans" role="alert"><%= error %></p>
+  <% end %>
+
+  <% if help_text && !has_error %>
+    <p class="mt-2 text-sm text-[hsla(320,30%,35%,1)] font-sans"><%= help_text %></p>
+  <% end %>
+</div>

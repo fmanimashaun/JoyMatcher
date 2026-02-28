@@ -1,0 +1,42 @@
+<%# Steps - Multi-step progress (Tier completion)
+Usage: <%= render 'ui/steps', steps: [
+  { label: 'Tier 1', status: 'complete' },
+  { label: 'Tier 2', status: 'current' },
+  { label: 'Tier 3', status: 'upcoming' }
+] %>
+%>
+<%
+steps ||= []
+orientation ||= 'horizontal'
+%>
+<nav aria-label="Progress">
+  <ol class="<%= orientation == 'horizontal' ? 'flex items-center' : 'space-y-4' %>">
+    <% steps.each_with_index do |step, index| %>
+      <%
+        status = step[:status] || 'upcoming'
+        icon_classes = {
+          'complete' => 'bg-[#8B7AA8] text-white',
+          'current' => 'bg-[#4D0052] text-white ring-4 ring-[#4D0052]/20',
+          'upcoming' => 'bg-white border-2 border-[hsla(320,25%,85%,1)] text-[hsla(320,30%,35%,1)]'
+        }[status]
+      %>
+      <li class="<%= orientation == 'horizontal' ? 'flex items-center' : '' %> relative">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full <%= icon_classes %> font-serif font-semibold text-sm transition-all">
+            <% if status == 'complete' %>
+              <iconify-icon icon="lucide:check" class="text-lg"></iconify-icon>
+            <% else %>
+              <%= index + 1 %>
+            <% end %>
+          </div>
+          <span class="text-sm font-serif font-semibold <%= status == 'current' ? 'text-[#4D0052]' : 'text-[hsla(320,30%,35%,1)]' %>">
+            <%= step[:label] %>
+          </span>
+        </div>
+        <% if orientation == 'horizontal' && index < steps.length - 1 %>
+          <div class="w-16 h-0.5 mx-4 <%= status == 'complete' ? 'bg-[#8B7AA8]' : 'bg-[hsla(320,25%,85%,1)]' %>"></div>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>

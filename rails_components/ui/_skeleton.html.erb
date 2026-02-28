@@ -1,0 +1,22 @@
+<%# Skeleton - Loading placeholder
+Usage: <%= render 'ui/skeleton', variant: 'text', lines: 3 %>
+%>
+<%
+variant ||= 'text'
+lines ||= 1
+width ||= 'full'
+height ||= nil
+
+width_classes = { 'full' => 'w-full', '3/4' => 'w-3/4', '1/2' => 'w-1/2', '1/4' => 'w-1/4' }
+%>
+<div class="animate-pulse">
+  <% if variant == 'text' %>
+    <% lines.times do |i| %>
+      <div class="<%= i == lines - 1 ? 'w-3/4' : 'w-full' %> h-4 bg-[hsla(320,20%,90%,1)] rounded mb-3"></div>
+    <% end %>
+  <% elsif variant == 'circle' %>
+    <div class="<%= height || 'w-12 h-12' %> bg-[hsla(320,20%,90%,1)] rounded-full"></div>
+  <% elsif variant == 'rectangle' %>
+    <div class="<%= width_classes[width] %> <%= height || 'h-32' %> bg-[hsla(320,20%,90%,1)] rounded-lg"></div>
+  <% end %>
+</div>

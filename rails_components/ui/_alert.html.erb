@@ -1,0 +1,204 @@
+<%#
+  Alert/Banner Component - Important Messages
+  Based on: Shopify Polaris Banner, Material Alert
+  Reference: https://polaris.shopify.com/components/banner
+
+  Usage:
+    <%= render 'ui/alert', title: 'Success', message: 'Profile updated!', variant: 'success' %>
+
+  Parameters:
+    - title: String - Alert title
+    - message: String - Alert message (or use block content)
+    - variant: String ('info', 'success', 'warning', 'error') - Visual style
+    - dismissible: Boolean (default: false) - Show dismiss button
+    - icon: Boolean (default: true) - Show variant icon
+    - action_text: String - Primary action button text
+    - action_href: String - Primary action button link
+    - secondary_action_text: String - Secondary action text
+    - secondary_action_href: String - Secondary action link
+
+  Examples:
+    <%# Success Alert %>
+    <%= render 'ui/alert',
+      title: 'Profile Updated',
+      message: 'Your profile has been successfully updated.',
+      variant: 'success',
+      dismissible: true
+    %>
+
+    <%# Tier Ceiling Warning %>
+    <%= render 'ui/alert',
+      title: 'Tier Ceiling Reached',
+      variant: 'warning',
+      action_text: 'Upgrade to Premium',
+      action_href: '/pricing'
+    do %>
+      <p>You cannot complete Tier 3 with a Free subscription.</p>
+      <p class="mt-2">Upgrade to Premium to unlock Tiers 3-4.</p>
+    <% end %>
+
+    <%# VIP Application Info %>
+    <%= render 'ui/alert',
+      title: 'VIP Application Under Review',
+      variant: 'info',
+      icon: true
+    do %>
+      <p>Our VIP Coordinator is reviewing your application.</p>
+      <p class="mt-2">You will receive a response within 24-48 hours.</p>
+    <% end %>
+
+    <%# Error Alert with Action %>
+    <%= render 'ui/alert',
+      title: 'Photo Upload Failed',
+      message: 'File size must be under 10MB. Please try again.',
+      variant: 'error',
+      action_text: 'Try Again',
+      action_href: '/app/profile/edit'
+    %>
+%>
+
+<%
+  # Defaults
+  title ||= nil
+  message ||= nil
+  variant ||= 'info'
+  dismissible ||= false
+  icon ||= true
+  action_text ||= nil
+  action_href ||= nil
+  secondary_action_text ||= nil
+  secondary_action_href ||= nil
+
+  # Variant styles
+  variant_config = {
+    'info' => {
+      bg: 'bg-[#E5E0F5]',
+      border: 'border-l-[#5B4A8E]',
+      title_color: 'text-[#5B4A8E]',
+      text_color: 'text-[hsla(320,50%,15%,1)]',
+      icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+      icon_color: 'text-[#5B4A8E]'
+    },
+    'success' => {
+      bg: 'bg-[#E8E4F0]',
+      border: 'border-l-[#8B7AA8]',
+      title_color: 'text-[#8B7AA8]',
+      text_color: 'text-[hsla(320,50%,15%,1)]',
+      icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+      icon_color: 'text-[#8B7AA8]'
+    },
+    'warning' => {
+      bg: 'bg-[#FFF4E6]',
+      border: 'border-l-[#E8A87C]',
+      title_color: 'text-[#E8A87C]',
+      text_color: 'text-[hsla(320,50%,15%,1)]',
+      icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />',
+      icon_color: 'text-[#E8A87C]'
+    },
+    'error' => {
+      bg: 'bg-[#FFE8E9]',
+      border: 'border-l-[#F16A6F]',
+      title_color: 'text-[#F16A6F]',
+      title_color: 'text-[hsla(320,50%,15%,1)]',
+      icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+      icon_color: 'text-[#F16A6F]'
+    }
+  }
+
+  config = variant_config[variant]
+
+  # Combined classes
+  alert_classes = [
+    config[:bg],
+    config[:border],
+    'border-l-4 rounded-lg p-4 shadow-[0_2px_8px_rgba(77,0,82,0.08)]'
+  ].join(' ')
+%>
+
+<div
+  class="<%= alert_classes %>"
+  role="alert"
+  aria-live="polite"
+  data-controller="<%= dismissible ? 'dismissible' : '' %>"
+>
+  <div class="flex items-start gap-3">
+    <%# Icon %>
+    <% if icon %>
+      <div class="flex-shrink-0">
+        <svg class="w-6 h-6 <%= config[:icon_color] %>" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <%= config[:icon].html_safe %>
+        </svg>
+      </div>
+    <% end %>
+
+    <%# Content %>
+    <div class="flex-1 min-w-0">
+      <% if title %>
+        <h3 class="font-serif font-semibold text-base <%= config[:title_color] %> mb-1">
+          <%= title %>
+        </h3>
+      <% end %>
+
+      <div class="text-sm <%= config[:text_color] %> leading-relaxed">
+        <% if block_given? %>
+          <%= yield %>
+        <% elsif message %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+
+      <%# Actions %>
+      <% if action_text || secondary_action_text %>
+        <div class="mt-3 flex items-center gap-3">
+          <% if action_text && action_href %>
+            <%= render 'ui/button',
+              text: action_text,
+              href: action_href,
+              variant: 'secondary',
+              size: 'small'
+            %>
+          <% end %>
+
+          <% if secondary_action_text && secondary_action_href %>
+            <a href="<%= secondary_action_href %>" class="text-sm font-semibold text-[#4D0052] hover:text-[#7D3365] transition-colors">
+              <%= secondary_action_text %>
+            </a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Dismiss Button %>
+    <% if dismissible %>
+      <button
+        type="button"
+        data-action="click->dismissible#dismiss"
+        class="flex-shrink-0 p-1 rounded text-[hsla(320,30%,35%,1)] hover:bg-white/50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#4D0052]"
+        aria-label="Dismiss alert"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<%# Stimulus Controller (app/javascript/controllers/dismissible_controller.js) %>
+<%#
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  dismiss() {
+    // Fade out animation
+    this.element.style.opacity = "0"
+    this.element.style.transform = "translateY(-10px)"
+    this.element.style.transition = "all 250ms ease-out"
+
+    // Remove from DOM after animation
+    setTimeout(() => {
+      this.element.remove()
+    }, 250)
+  }
+}
+%>

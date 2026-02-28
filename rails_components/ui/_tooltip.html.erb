@@ -1,0 +1,34 @@
+<%# Tooltip - Hover/focus information
+Usage: <%= render 'ui/tooltip', text: 'EDT stands for Effective Disclosure Tier' do %>
+  <span class="underline decoration-dotted">EDT</span>
+<% end %>
+%>
+<%
+text ||= ''
+position ||= 'top'
+%>
+<span class="relative inline-block" data-controller="tooltip">
+  <span data-tooltip-target="trigger" data-action="mouseenter->tooltip#show mouseleave->tooltip#hide focus->tooltip#show blur->tooltip#hide">
+    <%= yield %>
+  </span>
+
+  <span
+    data-tooltip-target="content"
+    role="tooltip"
+    class="hidden absolute z-50 px-3 py-2 text-sm font-sans text-white bg-[#4D0052] rounded-lg shadow-[0_4px_16px_rgba(77,0,82,0.16)] whitespace-nowrap
+    <%= case position
+        when 'top' then 'bottom-full left-1/2 -translate-x-1/2 mb-2'
+        when 'bottom' then 'top-full left-1/2 -translate-x-1/2 mt-2'
+        when 'left' then 'right-full top-1/2 -translate-y-1/2 mr-2'
+        when 'right' then 'left-full top-1/2 -translate-y-1/2 ml-2'
+        end %>"
+  >
+    <%= text %>
+    <span class="absolute <%= case position
+      when 'top' then 'top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#4D0052]'
+      when 'bottom' then 'bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-[#4D0052]'
+      when 'left' then 'left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-[#4D0052]'
+      when 'right' then 'right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-[#4D0052]'
+      end %>"></span>
+  </span>
+</span>

@@ -1,0 +1,141 @@
+<%#
+  Button Component - Polymorphic Button/Link
+  Based on: Shopify Polaris Button, Salesforce Lightning Button
+  Reference: https://polaris.shopify.com/components/button
+
+  Usage:
+    <%= render 'ui/button', text: 'Sign Up', variant: 'primary', size: 'medium' %>
+    <%= render 'ui/button', text: 'Learn More', variant: 'secondary', href: '/about' %>
+    <%= render 'ui/button', variant: 'ghost', loading: true do %>
+      <span>Processing...</span>
+    <% end %>
+
+  Parameters:
+    - text: String - Button label (or use block content)
+    - variant: String ('primary', 'secondary', 'outline', 'ghost', 'danger') - Visual style
+    - size: String ('small', 'medium', 'large') - Button size
+    - href: String - If present, renders as <a> tag
+    - type: String ('button', 'submit', 'reset') - Button type (default: 'button')
+    - disabled: Boolean - Disabled state
+    - loading: Boolean - Loading state with spinner
+    - icon_left: String - Lucide icon name for left icon
+    - icon_right: String - Lucide icon name for right icon
+    - full_width: Boolean - Stretch to full width
+    - aria_label: String - Accessible label for icon-only buttons
+
+  Examples:
+    <%# Primary CTA %>
+    <%= render 'ui/button', text: 'Get Started', variant: 'primary', size: 'large', href: '/signup' %>
+
+    <%# Secondary action %>
+    <%= render 'ui/button', text: 'Cancel', variant: 'secondary', size: 'medium' %>
+
+    <%# Icon button %>
+    <%= render 'ui/button', variant: 'ghost', icon_left: 'lucide:settings', aria_label: 'Settings' %>
+
+    <%# Loading state %>
+    <%= render 'ui/button', text: 'Processing', variant: 'primary', loading: true, disabled: true %>
+
+    <%# Full width %>
+    <%= render 'ui/button', text: 'Continue', variant: 'primary', full_width: true %>
+
+    <%# Block content %>
+    <%= render 'ui/button', variant: 'primary' do %>
+      <iconify-icon icon="lucide:arrow-right" class="text-base"></iconify-icon>
+      <span>Next Step</span>
+    <% end %>
+%>
+
+<%
+  # Defaults
+  text ||= nil
+  variant ||= 'primary'
+  size ||= 'medium'
+  href ||= nil
+  type ||= 'button'
+  disabled ||= false
+  loading ||= false
+  icon_left ||= nil
+  icon_right ||= nil
+  full_width ||= false
+  aria_label ||= nil
+
+  # Variant styles (aligned with design_system.md)
+  variant_styles = {
+    'primary' => 'bg-gradient-to-br from-[#4D0052] to-[#F16A6F] hover:from-[#7D3365] hover:to-[#C4446D] text-white/95 shadow-[0_2px_8px_rgba(77,0,82,0.08)] hover:shadow-[0_4px_16px_rgba(77,0,82,0.12)]',
+    'secondary' => 'border-2 border-[#4D0052] hover:border-[#7D3365] text-[#4D0052] hover:text-[#7D3365] hover:bg-[#4D0052]/5',
+    'outline' => 'border-2 border-[hsla(320,25%,85%,1)] hover:border-[hsla(320,35%,75%,1)] text-[hsla(320,30%,35%,1)] hover:text-[hsla(320,50%,15%,1)] hover:bg-[hsla(320,20%,98%,1)]',
+    'ghost' => 'text-[#4D0052] hover:bg-[#4D0052]/10',
+    'danger' => 'bg-[#F16A6F] hover:bg-[#C4446D] text-white/95 shadow-[0_2px_8px_rgba(241,106,111,0.08)]'
+  }
+
+  # Size styles
+  size_styles = {
+    'small' => 'px-4 py-2 text-sm min-h-[36px]',
+    'medium' => 'px-6 py-3 text-base min-h-[44px]',
+    'large' => 'px-8 py-4 text-lg min-h-[52px]'
+  }
+
+  # Base styles (aligned with Georgia serif, design tokens)
+  base_styles = 'font-serif font-semibold rounded-lg transition-all duration-250 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#4D0052] focus:ring-offset-2 inline-flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95'
+
+  # Disabled styles
+  disabled_styles = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-none'
+
+  # Full width
+  width_class = full_width ? 'w-full' : ''
+
+  # Combined classes
+  button_classes = [
+    base_styles,
+    variant_styles[variant],
+    size_styles[size],
+    disabled_styles,
+    width_class
+  ].join(' ')
+
+  # Element type
+  element_type = href ? :a : :button
+
+  # HTML attributes
+  html_attrs = {
+    class: button_classes,
+    disabled: (disabled || loading) ? true : nil,
+    'aria-disabled': (disabled || loading) ? 'true' : nil,
+    'aria-busy': loading ? 'true' : nil,
+    'aria-label': aria_label
+  }
+
+  if href
+    html_attrs[:href] = href
+  else
+    html_attrs[:type] = type
+  end
+%>
+
+<%= content_tag element_type, **html_attrs.compact do %>
+  <%# Loading Spinner %>
+  <% if loading %>
+    <svg class="w-5 h-5 animate-spin text-current" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  <% end %>
+
+  <%# Left Icon %>
+  <% if icon_left && !loading %>
+    <iconify-icon icon="<%= icon_left %>" class="text-base" aria-hidden="true"></iconify-icon>
+  <% end %>
+
+  <%# Content %>
+  <% if block_given? %>
+    <%= yield %>
+  <% elsif text %>
+    <span><%= text %></span>
+  <% end %>
+
+  <%# Right Icon %>
+  <% if icon_right && !loading %>
+    <iconify-icon icon="<%= icon_right %>" class="text-base" aria-hidden="true"></iconify-icon>
+  <% end %>
+<% end %>

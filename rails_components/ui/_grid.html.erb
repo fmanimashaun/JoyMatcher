@@ -1,0 +1,16 @@
+<%# Grid - Responsive grid layout
+Usage: <%= render 'ui/grid', cols: { sm: 1, md: 2, lg: 3 } do %>
+  <div>Item 1</div>
+  <div>Item 2</div>
+<% end %>
+%>
+<%
+cols ||= { sm: 1, md: 2, lg: 3 }
+gap ||= 'medium'
+
+col_classes = "grid-cols-#{cols[:sm] || 1} md:grid-cols-#{cols[:md] || 2} lg:grid-cols-#{cols[:lg] || 3}"
+gap_classes = { 'tight' => 'gap-4', 'medium' => 'gap-6', 'large' => 'gap-8' }
+%>
+<div class="grid <%= col_classes %> <%= gap_classes[gap] %>">
+  <%= yield %>
+</div>

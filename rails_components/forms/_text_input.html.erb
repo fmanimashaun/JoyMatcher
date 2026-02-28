@@ -1,0 +1,178 @@
+<%#
+  Text Input Component - Form Text Field
+  Based on: Shopify Polaris TextField, Material TextField
+  Reference: https://polaris.shopify.com/components/text-field
+
+  Usage:
+    <%= render 'forms/text_input',
+      name: 'user[name]',
+      label: 'Full Name',
+      required: true
+    %>
+
+  Parameters:
+    - name: String (required) - Input name attribute
+    - label: String - Input label
+    - value: String - Initial value
+    - placeholder: String - Placeholder text
+    - type: String ('text', 'email', 'password', 'tel', 'url', 'number') - Input type
+    - required: Boolean (default: false) - Required field
+    - disabled: Boolean (default: false) - Disabled state
+    - readonly: Boolean (default: false) - Read-only state
+    - error: String - Error message
+    - help_text: String - Helper text below input
+    - prefix: String - Text before input (e.g., "₦")
+    - suffix: String - Text after input (e.g., ".com")
+    - icon_left: String - Lucide icon on left
+    - icon_right: String - Lucide icon on right
+    - autocomplete: String - Autocomplete attribute
+    - maxlength: Integer - Maximum length
+    - pattern: String - Validation pattern
+
+  Examples:
+    <%# Basic Text Input %>
+    <%= render 'forms/text_input',
+      name: 'user[name]',
+      label: 'Full Name',
+      placeholder: 'Enter your full name',
+      required: true
+    %>
+
+    <%# Email with Icon %>
+    <%= render 'forms/text_input',
+      name: 'user[email]',
+      label: 'Email Address',
+      type: 'email',
+      icon_left: 'lucide:mail',
+      autocomplete: 'email',
+      required: true
+    %>
+
+    <%# Price Input with Prefix %>
+    <%= render 'forms/text_input',
+      name: 'price',
+      label: 'Price',
+      type: 'number',
+      prefix: '₦',
+      value: @user.country == 'NG' ? '18000' : nil
+    %>
+
+    <%# With Error %>
+    <%= render 'forms/text_input',
+      name: 'user[phone]',
+      label: 'Phone Number',
+      type: 'tel',
+      error: 'Phone number is invalid',
+      value: @user.phone
+    %>
+%>
+
+<%
+  # Defaults
+  name ||= nil
+  label ||= nil
+  value ||= nil
+  placeholder ||= nil
+  type ||= 'text'
+  required ||= false
+  disabled ||= false
+  readonly ||= false
+  error ||= nil
+  help_text ||= nil
+  prefix ||= nil
+  suffix ||= nil
+  icon_left ||= nil
+  icon_right ||= nil
+  autocomplete ||= nil
+  maxlength ||= nil
+  pattern ||= nil
+
+  # Generate IDs
+  input_id = "input-#{name.gsub(/[\[\]]/, '-')}"
+  error_id = "#{input_id}-error"
+  help_id = "#{input_id}-help"
+
+  # State classes
+  has_error = error.present?
+  border_class = has_error ? 'border-[#F16A6F] focus:border-[#F16A6F] focus:ring-[#F16A6F]/20' : 'border-[hsla(320,25%,85%,1)] focus:border-[#4D0052] focus:ring-[#4D0052]/20'
+%>
+
+<div class="w-full" data-controller="text-input">
+  <%# Label %>
+  <% if label %>
+    <label for="<%= input_id %>" class="block text-sm font-serif font-semibold text-[hsla(320,50%,15%,1)] mb-2">
+      <%= label %>
+      <% if required %>
+        <span class="text-[#F16A6F]" aria-label="required">*</span>
+      <% end %>
+    </label>
+  <% end %>
+
+  <%# Input Container %>
+  <div class="relative">
+    <%# Prefix %>
+    <% if prefix %>
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <span class="text-[hsla(320,30%,35%,1)] text-sm font-sans">
+          <%= prefix %>
+        </span>
+      </div>
+    <% end %>
+
+    <%# Left Icon %>
+    <% if icon_left %>
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <iconify-icon icon="<%= icon_left %>" class="text-base text-[hsla(320,30%,35%,1)]" aria-hidden="true"></iconify-icon>
+      </div>
+    <% end %>
+
+    <%# Input Field %>
+    <input
+      type="<%= type %>"
+      id="<%= input_id %>"
+      name="<%= name %>"
+      value="<%= value %>"
+      placeholder="<%= placeholder %>"
+      class="w-full px-4 py-3 font-sans text-base text-[hsla(320,50%,15%,1)] bg-white border <%= border_class %> rounded-lg transition-all duration-250 focus:outline-none focus:ring-2 disabled:bg-[hsla(320,20%,98%,1)] disabled:cursor-not-allowed <%= prefix || icon_left ? 'pl-10' : '' %> <%= suffix || icon_right ? 'pr-10' : '' %>"
+      <%= 'required' if required %>
+      <%= 'disabled' if disabled %>
+      <%= 'readonly' if readonly %>
+      <%= "autocomplete=\"#{autocomplete}\"" if autocomplete %>
+      <%= "maxlength=\"#{maxlength}\"" if maxlength %>
+      <%= "pattern=\"#{pattern}\"" if pattern %>
+      <%= "aria-invalid=\"true\"" if has_error %>
+      <%= "aria-describedby=\"#{error_id}\"" if has_error %>
+      <%= "aria-describedby=\"#{help_id}\"" if help_text && !has_error %>
+    />
+
+    <%# Suffix %>
+    <% if suffix %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-[hsla(320,30%,35%,1)] text-sm font-sans">
+          <%= suffix %>
+        </span>
+      </div>
+    <% end %>
+
+    <%# Right Icon %>
+    <% if icon_right %>
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <iconify-icon icon="<%= icon_right %>" class="text-base text-[hsla(320,30%,35%,1)]" aria-hidden="true"></iconify-icon>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Error Message %>
+  <% if has_error %>
+    <p id="<%= error_id %>" class="mt-2 text-sm text-[#F16A6F] font-sans" role="alert">
+      <%= error %>
+    </p>
+  <% end %>
+
+  <%# Help Text %>
+  <% if help_text && !has_error %>
+    <p id="<%= help_id %>" class="mt-2 text-sm text-[hsla(320,30%,35%,1)] font-sans">
+      <%= help_text %>
+    </p>
+  <% end %>
+</div>

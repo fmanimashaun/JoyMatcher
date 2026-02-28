@@ -1,0 +1,9 @@
+<%# Keyboard Key - Display keyboard shortcuts
+Usage: Press <%= render 'ui/kbd', key: 'Ctrl' %> + <%= render 'ui/kbd', key: 'S' %> to save
+%>
+<%
+key ||= ''
+%>
+<kbd class="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-2 bg-white border border-[hsla(320,25%,85%,1)] rounded text-xs font-sans font-semibold text-[hsla(320,50%,15%,1)] shadow-[0_1px_2px_rgba(77,0,82,0.08)]">
+  <%= key %>
+</kbd>

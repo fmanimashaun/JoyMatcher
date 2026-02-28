@@ -1,0 +1,257 @@
+<%#
+  Modal/Dialog Component - WCAG 2.1 AA Compliant
+  Based on: Headless UI Dialog, Radix UI Dialog
+  Reference: https://headlessui.com/react/dialog
+
+  Usage:
+    <%= render 'ui/modal', id: 'tier-warning', title: 'Tier Awareness Warning' do %>
+      <p>You are about to request Tier 3 information...</p>
+    <% end %>
+
+  Parameters:
+    - id: String (required) - Unique modal ID
+    - title: String - Modal title
+    - size: String ('small', 'medium', 'large', 'fullscreen') - Modal width
+    - closeable: Boolean (default: true) - Show close button
+    - close_on_backdrop: Boolean (default: true) - Close when clicking backdrop
+    - close_on_escape: Boolean (default: true) - Close when pressing ESC
+    - show_footer: Boolean (default: false) - Show footer slot
+    - variant: String ('default', 'danger', 'success') - Visual style
+
+  Footer Slot:
+    Use content_for :modal_footer to add footer content
+
+  Examples:
+    <%# Simple modal %>
+    <%= render 'ui/modal', id: 'simple-modal', title: 'Hello' do %>
+      <p>This is a simple modal.</p>
+    <% end %>
+
+    <%# Tier Warning Modal %>
+    <%= render 'ui/modal', id: 'tier-warning', title: 'Tier Awareness', size: 'medium', variant: 'default', show_footer: true do %>
+      <div class="space-y-4">
+        <p class="text-sm text-[hsla(320,30%,35%,1)]">
+          You are about to send Show Interest to <strong>Amara O.</strong>
+        </p>
+        <div class="bg-[#FFF4E6] border border-[#E8A87C] rounded-lg p-4">
+          <p class="text-sm text-[hsla(320,50%,15%,1)]">
+            <strong>Privacy Notice:</strong> They will only see your Tier 2 information.
+          </p>
+        </div>
+        <label class="flex items-start gap-3">
+          <input type="checkbox" class="mt-1" required>
+          <span class="text-sm">I understand and wish to proceed</span>
+        </label>
+      </div>
+
+      <% content_for :modal_footer do %>
+        <%= render 'ui/button', text: 'Cancel', variant: 'secondary', data: { action: 'click->modal#close' } %>
+        <%= render 'ui/button', text: 'Send Show Interest', variant: 'primary', type: 'submit' %>
+      <% end %>
+    <% end %>
+
+    <%# Upgrade Modal %>
+    <%= render 'ui/modal', id: 'upgrade-modal', title: 'Upgrade to Premium', size: 'large' do %>
+      <div class="space-y-6">
+        <p>Unlock Tiers 3-4 and unlimited Show Interest requests.</p>
+        <%= render 'ui/button', text: 'Upgrade Now', variant: 'primary', full_width: true %>
+      </div>
+    <% end %>
+%>
+
+<%
+  # Defaults
+  id ||= "modal-#{SecureRandom.hex(4)}"
+  title ||= nil
+  size ||= 'medium'
+  closeable ||= true
+  close_on_backdrop ||= true
+  close_on_escape ||= true
+  show_footer ||= false
+  variant ||= 'default'
+
+  # Size styles
+  size_classes = {
+    'small' => 'max-w-md',
+    'medium' => 'max-w-lg',
+    'large' => 'max-w-2xl',
+    'fullscreen' => 'max-w-full h-full m-0'
+  }
+
+  # Variant styles
+  header_variants = {
+    'default' => 'bg-white border-b border-[hsla(320,25%,85%,1)]',
+    'danger' => 'bg-[#FFE8E9] border-b border-[#F16A6F]',
+    'success' => 'bg-[#E8E4F0] border-b border-[#8B7AA8]'
+  }
+%>
+
+<%# Modal Backdrop %>
+<div
+  id="<%= id %>"
+  class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden"
+  data-controller="modal"
+  data-modal-closeable-value="<%= closeable %>"
+  data-modal-close-on-backdrop-value="<%= close_on_backdrop %>"
+  data-modal-close-on-escape-value="<%= close_on_escape %>"
+  data-action="<%= 'click->modal#closeOnBackdrop' if close_on_backdrop %> <%= 'keydown.esc->modal#closeOnEscape' if close_on_escape %>"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="<%= id %>-title"
+  <%= 'aria-hidden="true"' %>
+>
+  <%# Modal Container %>
+  <div
+    class="modal-container bg-white rounded-xl shadow-[0_8px_24px_rgba(77,0,82,0.16)] <%= size_classes[size] %> w-full transform transition-all duration-250 ease-out scale-95 opacity-0"
+    data-modal-target="container"
+    data-action="click->modal#stopPropagation"
+  >
+    <%# Modal Header %>
+    <% if title || closeable %>
+      <div class="modal-header <%= header_variants[variant] %> px-6 py-4 flex items-center justify-between">
+        <% if title %>
+          <h2 id="<%= id %>-title" class="font-serif text-xl font-semibold text-[hsla(320,50%,15%,1)] m-0">
+            <%= title %>
+          </h2>
+        <% end %>
+
+        <% if closeable %>
+          <button
+            type="button"
+            data-action="click->modal#close"
+            class="p-2 rounded-lg text-[hsla(320,30%,35%,1)] hover:bg-[hsla(320,20%,98%,1)] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4D0052]"
+            aria-label="Close modal"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Modal Body %>
+    <div class="modal-body px-6 py-6 overflow-y-auto max-h-[calc(100vh-200px)]">
+      <%= yield %>
+    </div>
+
+    <%# Modal Footer %>
+    <% if show_footer && content_for?(:modal_footer) %>
+      <div class="modal-footer border-t border-[hsla(320,25%,85%,1)] px-6 py-4 flex items-center justify-end gap-3 bg-[hsla(320,12%,98%,1)]">
+        <%= yield :modal_footer %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%# Stimulus Controller (app/javascript/controllers/modal_controller.js) %>
+<%#
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["container"]
+  static values = {
+    closeable: Boolean,
+    closeOnBackdrop: Boolean,
+    closeOnEscape: Boolean
+  }
+
+  connect() {
+    // Focus trap
+    this.previousActiveElement = document.activeElement
+    this.trapFocus()
+  }
+
+  disconnect() {
+    // Restore focus
+    if (this.previousActiveElement) {
+      this.previousActiveElement.focus()
+    }
+  }
+
+  open() {
+    // Show modal
+    this.element.classList.remove("hidden")
+
+    // Prevent body scroll
+    document.body.style.overflow = "hidden"
+
+    // Animate in
+    requestAnimationFrame(() => {
+      this.containerTarget.classList.remove("scale-95", "opacity-0")
+      this.containerTarget.classList.add("scale-100", "opacity-100")
+    })
+
+    // Set aria-hidden
+    this.element.removeAttribute("aria-hidden")
+
+    // Announce to screen readers
+    const title = this.element.querySelector("h2")
+    if (title) {
+      title.setAttribute("tabindex", "-1")
+      title.focus()
+    }
+  }
+
+  close() {
+    if (!this.closeableValue) return
+
+    // Animate out
+    this.containerTarget.classList.remove("scale-100", "opacity-100")
+    this.containerTarget.classList.add("scale-95", "opacity-0")
+
+    // Hide modal after animation
+    setTimeout(() => {
+      this.element.classList.add("hidden")
+      this.element.setAttribute("aria-hidden", "true")
+      document.body.style.overflow = ""
+    }, 250)
+  }
+
+  closeOnBackdrop(event) {
+    if (this.closeOnBackdropValue && event.target === this.element) {
+      this.close()
+    }
+  }
+
+  closeOnEscape() {
+    if (this.closeOnEscapeValue) {
+      this.close()
+    }
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation()
+  }
+
+  trapFocus() {
+    const focusableElements = this.element.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    this.element.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    })
+  }
+}
+
+// Open modal from anywhere:
+// document.getElementById('modal-id').querySelector('[data-controller="modal"]').dispatchEvent(new CustomEvent('modal:open'))
+
+// Or add to button:
+// <%= render 'ui/button', text: 'Open Modal', data: { action: 'click->modal#open' } %>
+%>

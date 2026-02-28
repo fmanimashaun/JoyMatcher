@@ -1,0 +1,53 @@
+<%#
+  Form Group Component - Container for Related Form Fields
+  Based on: Bootstrap Form Group
+
+  Usage:
+    <%= render 'forms/form_group', title: 'Personal Information' do %>
+      <%= render 'forms/text_input', name: 'user[name]', label: 'Name' %>
+      <%= render 'forms/text_input', name: 'user[email]', label: 'Email' %>
+    <% end %>
+
+  Parameters:
+    - title: String - Group title
+    - description: String - Group description
+    - required: Boolean - Show required indicator
+    - variant: String ('default', 'bordered', 'elevated')
+%>
+
+<%
+  title ||= nil
+  description ||= nil
+  required ||= false
+  variant ||= 'default'
+
+  variant_classes = {
+    'default' => '',
+    'bordered' => 'border border-[hsla(320,25%,85%,1)] rounded-lg p-6',
+    'elevated' => 'bg-white border border-[hsla(320,25%,85%,1)] rounded-lg p-6 shadow-[0_2px_8px_rgba(77,0,82,0.08)]'
+  }
+%>
+
+<div class="w-full <%= variant_classes[variant] %>">
+  <% if title || description %>
+    <div class="mb-6">
+      <% if title %>
+        <h3 class="text-lg font-serif font-semibold text-[hsla(320,50%,15%,1)]">
+          <%= title %>
+          <% if required %>
+            <span class="text-[#F16A6F]" aria-label="required">*</span>
+          <% end %>
+        </h3>
+      <% end %>
+      <% if description %>
+        <p class="mt-2 text-sm font-sans text-[hsla(320,30%,35%,1)]">
+          <%= description %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="space-y-6">
+    <%= yield %>
+  </div>
+</div>

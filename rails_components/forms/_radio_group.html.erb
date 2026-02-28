@@ -1,0 +1,89 @@
+<%#
+  Radio Group Component
+  Based on: Radix UI Radio Group
+
+  Usage:
+    <%= render 'forms/radio_group',
+      name: 'user[subscription]',
+      label: 'Choose Plan',
+      options: [
+        { value: 'free', label: 'Free', description: '₦0/month' },
+        { value: 'premium', label: 'Premium', description: '₦18,000/month' }
+      ],
+      selected: 'free'
+    %>
+
+  Parameters:
+    - name: String (required)
+    - label: String
+    - options: Array of hashes with :value, :label, :description
+    - selected: String
+    - required: Boolean
+    - disabled: Boolean
+    - error: String
+    - orientation: String ('vertical', 'horizontal')
+%>
+
+<%
+  name ||= nil
+  label ||= nil
+  options ||= []
+  selected ||= nil
+  required ||= false
+  disabled ||= false
+  error ||= nil
+  orientation ||= 'vertical'
+
+  group_id = "radio-group-#{name.gsub(/[\[\]]/, '-')}"
+  layout_class = orientation == 'horizontal' ? 'flex gap-4' : 'space-y-3'
+%>
+
+<div class="w-full">
+  <% if label %>
+    <label class="block text-sm font-serif font-semibold text-[hsla(320,50%,15%,1)] mb-3">
+      <%= label %>
+      <% if required %>
+        <span class="text-[#F16A6F]" aria-label="required">*</span>
+      <% end %>
+    </label>
+  <% end %>
+
+  <div class="<%= layout_class %>" role="radiogroup" aria-labelledby="<%= group_id %>">
+    <% options.each_with_index do |option, index| %>
+      <%
+        option_id = "#{group_id}-#{index}"
+        is_selected = (selected == option[:value])
+      %>
+
+      <label for="<%= option_id %>" class="flex items-start gap-3 cursor-pointer">
+        <div class="flex items-center h-6">
+          <input
+            type="radio"
+            id="<%= option_id %>"
+            name="<%= name %>"
+            value="<%= option[:value] %>"
+            <%= 'checked' if is_selected %>
+            <%= 'required' if required %>
+            <%= 'disabled' if disabled %>
+            class="w-5 h-5 text-[#4D0052] bg-white border-2 border-[hsla(320,25%,85%,1)] focus:ring-2 focus:ring-[#4D0052]/20 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+        </div>
+
+        <div class="flex-1">
+          <div class="text-sm font-sans font-semibold text-[hsla(320,50%,15%,1)]">
+            <%= option[:label] %>
+          </div>
+          <% if option[:description] %>
+            <div class="text-sm text-[hsla(320,30%,35%,1)] font-sans mt-1">
+              <%= option[:description] %>
+            </div>
+          <% end %>
+        </div>
+      </label>
+    <% end %>
+  </div>
+
+  <% if error %>
+    <p class="mt-2 text-sm text-[#F16A6F] font-sans" role="alert"><%= error %></p>
+  <% end %>
+</div>

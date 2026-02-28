@@ -1,0 +1,173 @@
+<%#
+  Progress Bar Component - Tier Completion & Loading Indicator
+  Based on: Material LinearProgress, Polaris ProgressBar
+  Reference: https://m3.material.io/components/progress-indicators
+
+  Usage:
+    <%= render 'ui/progress_bar', value: 60, max: 100, label: 'Tier 3 Progress' %>
+
+  Parameters:
+    - value: Integer/Float - Current progress value
+    - max: Integer (default: 100) - Maximum value
+    - label: String - Progress label
+    - variant: String ('default', 'success', 'warning', 'error', 'premium') - Visual style
+    - size: String ('small', 'medium', 'large') - Progress bar height
+    - show_percentage: Boolean (default: true) - Show percentage text
+    - indeterminate: Boolean (default: false) - Indeterminate/loading animation
+    - striped: Boolean (default: false) - Animated striped pattern
+
+  Examples:
+    <%# Tier Completion Progress %>
+    <%= render 'ui/progress_bar',
+      value: @user.tier_completion_percentage,
+      label: 'Profile Completion',
+      variant: 'premium',
+      size: 'large'
+    %>
+
+    <%# Upload Progress %>
+    <%= render 'ui/progress_bar',
+      value: 45,
+      label: 'Uploading photo...',
+      variant: 'default',
+      striped: true
+    %>
+
+    <%# Indeterminate Loading %>
+    <%= render 'ui/progress_bar',
+      label: 'Processing...',
+      indeterminate: true,
+      size: 'small'
+    %>
+
+    <%# Success State %>
+    <%= render 'ui/progress_bar',
+      value: 100,
+      label: 'Tier 5 Verified',
+      variant: 'success'
+    %>
+%>
+
+<%
+  # Defaults
+  value ||= 0
+  max ||= 100
+  label ||= nil
+  variant ||= 'default'
+  size ||= 'medium'
+  show_percentage ||= true
+  indeterminate ||= false
+  striped ||= false
+
+  # Calculate percentage
+  percentage = indeterminate ? 0 : ((value.to_f / max.to_f) * 100).round
+
+  # Variant styles
+  variant_config = {
+    'default' => {
+      bg: 'bg-[hsla(320,20%,95%,1)]',
+      fill: 'bg-[#4D0052]'
+    },
+    'success' => {
+      bg: 'bg-[#E8E4F0]',
+      fill: 'bg-[#8B7AA8]'
+    },
+    'warning' => {
+      bg: 'bg-[#FFF4E6]',
+      fill: 'bg-[#E8A87C]'
+    },
+    'error' => {
+      bg: 'bg-[#FFE8E9]',
+      fill: 'bg-[#F16A6F]'
+    },
+    'premium' => {
+      bg: 'bg-[hsla(320,20%,95%,1)]',
+      fill: 'bg-gradient-to-r from-[#4D0052] to-[#F16A6F]'
+    }
+  }
+
+  config = variant_config[variant]
+
+  # Size styles
+  size_classes = {
+    'small' => 'h-1',
+    'medium' => 'h-2',
+    'large' => 'h-3'
+  }
+%>
+
+<div class="w-full" role="progressbar" aria-valuenow="<%= value %>" aria-valuemin="0" aria-valuemax="<%= max %>" <%= 'aria-label="' + label + '"' if label %>>
+  <%# Label %>
+  <% if label %>
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-sans font-semibold text-[hsla(320,50%,15%,1)]">
+        <%= label %>
+      </span>
+      <% if show_percentage && !indeterminate %>
+        <span class="text-sm font-sans text-[hsla(320,30%,35%,1)]">
+          <%= percentage %>%
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Progress Track %>
+  <div class="<%= config[:bg] %> <%= size_classes[size] %> rounded-full overflow-hidden">
+    <% if indeterminate %>
+      <%# Indeterminate Animation %>
+      <div
+        class="<%= config[:fill] %> h-full rounded-full animate-indeterminate"
+        style="width: 30%;"
+      ></div>
+    <% else %>
+      <%# Determinate Progress %>
+      <div
+        class="<%= config[:fill] %> h-full rounded-full transition-all duration-500 ease-out <%= striped ? 'animate-striped' : '' %>"
+        style="width: <%= percentage %>%"
+        <% if striped %>
+          data-striped="true"
+        <% end %>
+      ></div>
+    <% end %>
+  </div>
+</div>
+
+<%# CSS Animations (add to application.css or Tailwind config) %>
+<%#
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes striped {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.animate-indeterminate {
+  animation: indeterminate 1.5s linear infinite;
+}
+
+.animate-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 40px 40px;
+  animation: striped 1s linear infinite;
+}
+%>

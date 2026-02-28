@@ -1,0 +1,73 @@
+<%#
+  Checkbox Component
+  Based on: Radix UI Checkbox, Polaris Checkbox
+
+  Usage:
+    <%= render 'forms/checkbox',
+      name: 'user[agree_terms]',
+      label: 'I agree to the terms',
+      required: true
+    %>
+
+  Parameters:
+    - name: String (required)
+    - label: String/Block - Label text
+    - checked: Boolean - Checked state
+    - value: String (default: '1')
+    - required: Boolean
+    - disabled: Boolean
+    - error: String
+    - help_text: String
+%>
+
+<%
+  name ||= nil
+  label ||= nil
+  checked ||= false
+  value ||= '1'
+  required ||= false
+  disabled ||= false
+  error ||= nil
+  help_text ||= nil
+
+  input_id = "checkbox-#{name.gsub(/[\[\]]/, '-')}"
+  has_error = error.present?
+%>
+
+<div class="flex items-start gap-3">
+  <div class="flex items-center h-6">
+    <input
+      type="checkbox"
+      id="<%= input_id %>"
+      name="<%= name %>"
+      value="<%= value %>"
+      <%= 'checked' if checked %>
+      <%= 'required' if required %>
+      <%= 'disabled' if disabled %>
+      class="w-5 h-5 text-[#4D0052] bg-white border-2 border-[hsla(320,25%,85%,1)] rounded focus:ring-2 focus:ring-[#4D0052]/20 focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    />
+  </div>
+
+  <div class="flex-1">
+    <% if label || block_given? %>
+      <label for="<%= input_id %>" class="text-sm font-sans text-[hsla(320,50%,15%,1)] cursor-pointer">
+        <% if block_given? %>
+          <%= yield %>
+        <% else %>
+          <%= label %>
+        <% end %>
+        <% if required %>
+          <span class="text-[#F16A6F]" aria-label="required">*</span>
+        <% end %>
+      </label>
+    <% end %>
+
+    <% if help_text && !error %>
+      <p class="mt-1 text-sm text-[hsla(320,30%,35%,1)] font-sans"><%= help_text %></p>
+    <% end %>
+
+    <% if error %>
+      <p class="mt-1 text-sm text-[#F16A6F] font-sans" role="alert"><%= error %></p>
+    <% end %>
+  </div>
+</div>

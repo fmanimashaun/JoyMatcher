@@ -1,0 +1,13 @@
+<%# Stack - Vertical layout utility
+Usage: <%= render 'ui/stack', gap: 'large' do %>
+  <div>Item 1</div>
+  <div>Item 2</div>
+<% end %>
+%>
+<%
+gap ||= 'medium'
+gap_classes = { 'tight' => 'space-y-2', 'medium' => 'space-y-4', 'large' => 'space-y-6', 'xl' => 'space-y-8' }
+%>
+<div class="<%= gap_classes[gap] %>">
+  <%= yield %>
+</div>

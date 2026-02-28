@@ -1,0 +1,22 @@
+<%# Tag - Similar to Badge but for categories/labels
+Usage: <%= render 'ui/tag', text: 'Photography', removable: true %>
+%>
+<%
+text ||= ''
+removable ||= false
+variant ||= 'default'
+
+variant_classes = {
+  'default' => 'bg-[hsla(320,20%,95%,1)] text-[hsla(320,50%,15%,1)]',
+  'primary' => 'bg-[#4D0052]/10 text-[#4D0052]',
+  'success' => 'bg-[#E8E4F0] text-[#8B7AA8]'
+}
+%>
+<span class="inline-flex items-center gap-2 px-3 py-1 <%= variant_classes[variant] %> rounded-full text-sm font-sans font-semibold">
+  <%= text %>
+  <% if removable %>
+    <button type="button" class="p-0.5 hover:bg-black/10 rounded-full transition-colors" aria-label="Remove <%= text %>">
+      <iconify-icon icon="lucide:x" class="text-xs"></iconify-icon>
+    </button>
+  <% end %>
+</span>

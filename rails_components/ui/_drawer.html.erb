@@ -1,0 +1,26 @@
+<%# Drawer - Side panel (filters, mobile menu)
+Usage: <%= render 'ui/drawer', id: 'filters', title: 'Filters', position: 'right' %>
+%>
+<%
+id ||= "drawer-#{SecureRandom.hex(4)}"
+title ||= nil
+position ||= 'right'
+width ||= 'md'
+
+width_classes = { 'sm' => 'max-w-sm', 'md' => 'max-w-md', 'lg' => 'max-w-lg', 'xl' => 'max-w-xl', 'full' => 'max-w-full' }
+position_classes = position == 'right' ? 'right-0' : 'left-0'
+%>
+<div id="<%= id %>" class="fixed inset-0 z-50 hidden" data-controller="drawer" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" data-action="click->drawer#close"></div>
+  <div class="fixed inset-y-0 <%= position_classes %> <%= width_classes[width] %> w-full bg-white shadow-[0_8px_24px_rgba(77,0,82,0.16)] transform transition-transform duration-300 translate-x-full" data-drawer-target="panel">
+    <div class="flex items-center justify-between p-6 border-b border-[hsla(320,25%,85%,1)]">
+      <h2 class="text-xl font-serif font-semibold text-[hsla(320,50%,15%,1)]"><%= title %></h2>
+      <button type="button" data-action="click->drawer#close" class="p-2 hover:bg-[hsla(320,20%,98%,1)] rounded-lg transition-colors">
+        <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+      </button>
+    </div>
+    <div class="p-6 overflow-y-auto" style="max-height: calc(100vh - 80px);">
+      <%= yield %>
+    </div>
+  </div>
+</div>

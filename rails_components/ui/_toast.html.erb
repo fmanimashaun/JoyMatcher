@@ -1,0 +1,244 @@
+<%#
+  Toast/Notification Component
+  Based on: Radix UI Toast, Shopify Polaris Toast
+  Reference: https://www.radix-ui.com/primitives/docs/components/toast
+
+  Usage (from controller/Stimulus):
+    <% # Add to application layout %>
+    <%= render 'ui/toast_container' %>
+
+    <% # Trigger from Stimulus controller: %>
+    this.application.getControllerForElementAndIdentifier(
+      document.querySelector('[data-controller="toast"]'),
+      "toast"
+    ).show({
+      variant: 'success',
+      message: 'Profile updated successfully!',
+      duration: 5000
+    })
+
+  Parameters:
+    - variant: String ('success', 'error', 'warning', 'info') - Visual style
+    - message: String - Toast message
+    - title: String (optional) - Toast title
+    - duration: Integer (default: 5000) - Auto-dismiss duration in ms (0 = no auto-dismiss)
+    - dismissible: Boolean (default: true) - Show close button
+    - action_text: String (optional) - Action button text
+    - action_href: String (optional) - Action button link
+
+  Examples:
+    <%# Success Toast %>
+    { variant: 'success', message: 'Profile updated successfully!', duration: 5000 }
+
+    <%# Error Toast %>
+    { variant: 'error', title: 'Upload Failed', message: 'Photo must be under 10MB.', duration: 0 }
+
+    <%# Warning Toast %>
+    { variant: 'warning', message: 'You have 3 Show Interest requests remaining.', duration: 7000 }
+
+    <%# Info Toast with Action %>
+    {
+      variant: 'info',
+      title: 'New Message',
+      message: 'You have a new message from Amara O.',
+      action_text: 'View',
+      action_href: '/app/messages'
+    }
+%>
+
+<%# Toast Container (add to application layout) %>
+<div
+  id="toast-container"
+  data-controller="toast"
+  class="fixed top-4 right-4 z-50 flex flex-col gap-3 max-w-md w-full pointer-events-none"
+  role="region"
+  aria-live="polite"
+  aria-label="Notifications"
+>
+  <%# Toasts will be inserted here dynamically %>
+</div>
+
+<%# Toast Template (used by Stimulus controller) %>
+<template id="toast-template">
+  <div
+    class="toast pointer-events-auto bg-white border-l-[4px] rounded-lg shadow-[0_8px_24px_rgba(77,0,82,0.16)] p-4 transform transition-all duration-300 ease-out translate-x-full opacity-0"
+    data-toast-target="item"
+    role="alert"
+    aria-atomic="true"
+  >
+    <div class="flex items-start gap-3">
+      <%# Icon %>
+      <div class="flex-shrink-0">
+        <svg class="toast-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <%# Icon will be replaced by Stimulus %>
+        </svg>
+      </div>
+
+      <%# Content %>
+      <div class="flex-1 min-w-0">
+        <h4 class="toast-title font-serif font-semibold text-sm text-[hsla(320,50%,15%,1)]"></h4>
+        <p class="toast-message text-sm text-[hsla(320,30%,35%,1)] mt-1"></p>
+      </div>
+
+      <%# Close Button %>
+      <button
+        type="button"
+        class="toast-close flex-shrink-0 p-1 rounded text-[hsla(320,30%,35%,1)] hover:bg-[hsla(320,20%,98%,1)] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4D0052]"
+        data-action="click->toast#dismiss"
+        aria-label="Close notification"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <%# Action Button (optional) %>
+    <div class="toast-action mt-3 pl-9 hidden">
+      <a href="#" class="text-sm font-semibold text-[#4D0052] hover:text-[#7D3365] transition-colors">Action</a>
+    </div>
+  </div>
+</template>
+
+<%# Stimulus Controller (app/javascript/controllers/toast_controller.js) %>
+<%#
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["item"]
+
+  connect() {
+    this.toasts = []
+  }
+
+  show({
+    variant = 'info',
+    title = null,
+    message = '',
+    duration = 5000,
+    dismissible = true,
+    action_text = null,
+    action_href = null
+  }) {
+    // Clone template
+    const template = document.getElementById('toast-template')
+    const toast = template.content.cloneNode(true).querySelector('.toast')
+
+    // Variant styles
+    const variants = {
+      success: {
+        border: 'border-l-[#8B7AA8]',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+        iconColor: 'text-[#8B7AA8]'
+      },
+      error: {
+        border: 'border-l-[#F16A6F]',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />',
+        iconColor: 'text-[#F16A6F]'
+      },
+      warning: {
+        border: 'border-l-[#E8A87C]',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />',
+        iconColor: 'text-[#E8A87C]'
+      },
+      info: {
+        border: 'border-l-[#5B4A8E]',
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+        iconColor: 'text-[#5B4A8E]'
+      }
+    }
+
+    const variantStyle = variants[variant] || variants.info
+
+    // Apply variant
+    toast.classList.add(variantStyle.border)
+    const icon = toast.querySelector('.toast-icon')
+    icon.innerHTML = variantStyle.icon
+    icon.classList.add(variantStyle.iconColor)
+
+    // Set content
+    const titleEl = toast.querySelector('.toast-title')
+    const messageEl = toast.querySelector('.toast-message')
+
+    if (title) {
+      titleEl.textContent = title
+    } else {
+      titleEl.remove()
+    }
+
+    messageEl.textContent = message
+
+    // Hide close button if not dismissible
+    if (!dismissible) {
+      toast.querySelector('.toast-close').remove()
+    }
+
+    // Add action button
+    if (action_text && action_href) {
+      const actionEl = toast.querySelector('.toast-action')
+      actionEl.classList.remove('hidden')
+      const actionLink = actionEl.querySelector('a')
+      actionLink.textContent = action_text
+      actionLink.href = action_href
+    }
+
+    // Append to container
+    this.element.appendChild(toast)
+    this.toasts.push(toast)
+
+    // Animate in
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-x-full', 'opacity-0')
+      toast.classList.add('translate-x-0', 'opacity-100')
+    })
+
+    // Auto-dismiss
+    if (duration > 0) {
+      setTimeout(() => {
+        this.dismissToast(toast)
+      }, duration)
+    }
+
+    return toast
+  }
+
+  dismiss(event) {
+    const toast = event.currentTarget.closest('.toast')
+    this.dismissToast(toast)
+  }
+
+  dismissToast(toast) {
+    // Animate out
+    toast.classList.remove('translate-x-0', 'opacity-100')
+    toast.classList.add('translate-x-full', 'opacity-0')
+
+    // Remove after animation
+    setTimeout(() => {
+      toast.remove()
+      this.toasts = this.toasts.filter(t => t !== toast)
+    }, 300)
+  }
+}
+
+// Usage from anywhere in your app:
+// const toastController = document.querySelector('[data-controller="toast"]').controller
+// toastController.show({
+//   variant: 'success',
+//   message: 'Profile updated!'
+// })
+
+// Or via Stimulus action:
+// data-action="submit->profile#save"
+//
+// save(event) {
+//   event.preventDefault()
+//   // ... save logic
+//   this.application.getControllerForElementAndIdentifier(
+//     document.querySelector('[data-controller="toast"]'),
+//     "toast"
+//   ).show({
+//     variant: 'success',
+//     message: 'Profile updated successfully!'
+//   })
+// }
+%>

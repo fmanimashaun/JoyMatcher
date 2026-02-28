@@ -1,0 +1,18 @@
+<%# Divider - Horizontal/vertical separator
+Usage: <%= render 'ui/divider', text: 'OR' %>
+%>
+<%
+text ||= nil
+orientation ||= 'horizontal'
+%>
+<% if orientation == 'horizontal' %>
+  <div class="relative flex items-center py-4">
+    <div class="flex-grow border-t border-[hsla(320,25%,85%,1)]"></div>
+    <% if text %>
+      <span class="px-4 text-sm font-sans text-[hsla(320,30%,35%,1)]"><%= text %></span>
+      <div class="flex-grow border-t border-[hsla(320,25%,85%,1)]"></div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="w-px h-full bg-[hsla(320,25%,85%,1)]"></div>
+<% end %>

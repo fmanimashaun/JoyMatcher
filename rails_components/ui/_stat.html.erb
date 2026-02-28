@@ -1,0 +1,22 @@
+<%# Stat - Statistics display (Dashboard metrics)
+Usage: <%= render 'ui/stat', label: 'Show Interest Sent', value: 12, trend: '+3 this week', icon: 'lucide:heart' %>
+%>
+<%
+label ||= ''
+value ||= 0
+trend ||= nil
+icon ||= nil
+variant ||= 'default'
+%>
+<div class="bg-white border border-[hsla(320,25%,85%,1)] rounded-lg p-6 <%= variant == 'elevated' ? 'shadow-[0_2px_8px_rgba(77,0,82,0.08)]' : '' %>">
+  <div class="flex items-center justify-between mb-2">
+    <span class="text-sm font-sans text-[hsla(320,30%,35%,1)]"><%= label %></span>
+    <% if icon %>
+      <iconify-icon icon="<%= icon %>" class="text-xl text-[#4D0052]"></iconify-icon>
+    <% end %>
+  </div>
+  <div class="text-3xl font-serif font-bold text-[hsla(320,50%,15%,1)] mb-1"><%= value %></div>
+  <% if trend %>
+    <div class="text-sm font-sans text-[#8B7AA8]"><%= trend %></div>
+  <% end %>
+</div>

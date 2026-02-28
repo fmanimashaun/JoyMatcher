@@ -1,0 +1,26 @@
+<%# List - Simple list with optional icons
+Usage: <%= render 'ui/list', items: [
+  { label: 'Premium access', icon: 'lucide:check' },
+  { label: 'VIP support', icon: 'lucide:check' }
+], variant: 'checkmark' %>
+%>
+<%
+items ||= []
+variant ||= 'default'
+ordered ||= false
+%>
+<% tag_name = ordered ? :ol : :ul %>
+<%= content_tag tag_name, class: "space-y-3" do %>
+  <% items.each do |item| %>
+    <li class="flex items-start gap-3 text-sm font-sans text-[hsla(320,50%,15%,1)]">
+      <% if item[:icon] %>
+        <iconify-icon icon="<%= item[:icon] %>" class="text-base text-[#4D0052] mt-0.5 flex-shrink-0"></iconify-icon>
+      <% elsif variant == 'checkmark' %>
+        <iconify-icon icon="lucide:check-circle" class="text-base text-[#8B7AA8] mt-0.5 flex-shrink-0"></iconify-icon>
+      <% elsif variant == 'bullet' %>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#4D0052] mt-2 flex-shrink-0"></span>
+      <% end %>
+      <span><%= item[:label] || item %></span>
+    </li>
+  <% end %>
+<% end %>

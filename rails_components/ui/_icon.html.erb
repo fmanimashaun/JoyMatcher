@@ -1,0 +1,16 @@
+<%# Icon - Iconify icon wrapper
+Usage: <%= render 'ui/icon', name: 'lucide:heart', size: 'lg', color: 'primary' %>
+%>
+<%
+name ||= 'lucide:circle'
+size ||= 'base'
+color ||= nil
+
+size_classes = { 'xs' => 'text-xs', 'sm' => 'text-sm', 'base' => 'text-base', 'lg' => 'text-lg', 'xl' => 'text-xl', '2xl' => 'text-2xl', '3xl' => 'text-3xl' }
+color_classes = { 'primary' => 'text-[#4D0052]', 'success' => 'text-[#8B7AA8]', 'error' => 'text-[#F16A6F]', 'warning' => 'text-[#E8A87C]' }
+%>
+<iconify-icon
+  icon="<%= name %>"
+  class="<%= size_classes[size] %> <%= color ? color_classes[color] : '' %>"
+  <%= 'aria-hidden="true"' unless color %>
+></iconify-icon>

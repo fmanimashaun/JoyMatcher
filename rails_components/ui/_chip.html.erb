@@ -1,0 +1,20 @@
+<%# Chip - Interactive tag with avatar
+Usage: <%= render 'ui/chip', text: 'Amara O.', avatar: user.avatar_url %>
+%>
+<%
+text ||= ''
+avatar ||= nil
+removable ||= false
+clickable ||= false
+%>
+<span class="inline-flex items-center gap-2 px-2 py-1 bg-[hsla(320,20%,95%,1)] rounded-full <%= clickable ? 'cursor-pointer hover:bg-[hsla(320,20%,90%,1)]' : '' %> transition-colors">
+  <% if avatar %>
+    <img src="<%= avatar %>" alt="" class="w-6 h-6 rounded-full object-cover" />
+  <% end %>
+  <span class="text-sm font-sans font-semibold text-[hsla(320,50%,15%,1)]"><%= text %></span>
+  <% if removable %>
+    <button type="button" class="p-0.5 hover:bg-black/10 rounded-full transition-colors" aria-label="Remove">
+      <iconify-icon icon="lucide:x" class="text-xs"></iconify-icon>
+    </button>
+  <% end %>
+</span>

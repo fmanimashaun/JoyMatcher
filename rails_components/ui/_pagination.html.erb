@@ -1,0 +1,35 @@
+<%# Pagination - Page navigation
+Usage: <%= render 'ui/pagination', current_page: 2, total_pages: 10, url: '/discover' %>
+%>
+<%
+current_page ||= 1
+total_pages ||= 1
+url ||= ''
+show_edges ||= true
+max_pages ||= 7
+%>
+<nav aria-label="Pagination" class="flex items-center justify-center gap-2">
+  <% if current_page > 1 %>
+    <a href="<%= url %>?page=<%= current_page - 1 %>" class="px-3 py-2 text-sm font-sans font-semibold text-[hsla(320,30%,35%,1)] hover:text-[#4D0052] hover:bg-[hsla(320,20%,98%,1)] rounded-lg transition-colors" aria-label="Previous page">
+      <iconify-icon icon="lucide:chevron-left"></iconify-icon>
+    </a>
+  <% end %>
+
+  <% (1..total_pages).each do |page| %>
+    <% if page == current_page %>
+      <span class="px-4 py-2 text-sm font-sans font-semibold bg-[#4D0052] text-white rounded-lg" aria-current="page"><%= page %></span>
+    <% elsif (page - current_page).abs <= 2 || (show_edges && (page == 1 || page == total_pages)) %>
+      <a href="<%= url %>?page=<%= page %>" class="px-4 py-2 text-sm font-sans font-semibold text-[hsla(320,30%,35%,1)] hover:text-[#4D0052] hover:bg-[hsla(320,20%,98%,1)] rounded-lg transition-colors">
+        <%= page %>
+      </a>
+    <% elsif (page - current_page).abs == 3 %>
+      <span class="px-2 text-[hsla(320,30%,35%,1)]">...</span>
+    <% end %>
+  <% end %>
+
+  <% if current_page < total_pages %>
+    <a href="<%= url %>?page=<%= current_page + 1 %>" class="px-3 py-2 text-sm font-sans font-semibold text-[hsla(320,30%,35%,1)] hover:text-[#4D0052] hover:bg-[hsla(320,20%,98%,1)] rounded-lg transition-colors" aria-label="Next page">
+      <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+    </a>
+  <% end %>
+</nav>

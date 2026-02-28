@@ -1,0 +1,105 @@
+<%#
+  Textarea Component - Multi-line Text Input
+  Based on: Shopify Polaris TextField (multiline), Material TextField
+
+  Usage:
+    <%= render 'forms/textarea',
+      name: 'user[bio]',
+      label: 'About You',
+      rows: 4
+    %>
+
+  Parameters:
+    - name: String (required) - Textarea name
+    - label: String - Label text
+    - value: String - Initial value
+    - placeholder: String - Placeholder
+    - rows: Integer (default: 4) - Number of rows
+    - required: Boolean (default: false)
+    - disabled: Boolean (default: false)
+    - readonly: Boolean (default: false)
+    - error: String - Error message
+    - help_text: String - Helper text
+    - maxlength: Integer - Character limit
+    - show_count: Boolean (default: false) - Show character count
+    - resize: String ('none', 'vertical', 'horizontal', 'both')
+%>
+
+<%
+  name ||= nil
+  label ||= nil
+  value ||= nil
+  placeholder ||= nil
+  rows ||= 4
+  required ||= false
+  disabled ||= false
+  readonly ||= false
+  error ||= nil
+  help_text ||= nil
+  maxlength ||= nil
+  show_count ||= false
+  resize ||= 'vertical'
+
+  input_id = "textarea-#{name.gsub(/[\[\]]/, '-')}"
+  error_id = "#{input_id}-error"
+  help_id = "#{input_id}-help"
+
+  has_error = error.present?
+  border_class = has_error ? 'border-[#F16A6F] focus:border-[#F16A6F] focus:ring-[#F16A6F]/20' : 'border-[hsla(320,25%,85%,1)] focus:border-[#4D0052] focus:ring-[#4D0052]/20'
+
+  resize_class = {
+    'none' => 'resize-none',
+    'vertical' => 'resize-y',
+    'horizontal' => 'resize-x',
+    'both' => 'resize'
+  }[resize] || 'resize-y'
+%>
+
+<div class="w-full" data-controller="<%= show_count ? 'character-count' : '' %>">
+  <% if label %>
+    <label for="<%= input_id %>" class="block text-sm font-serif font-semibold text-[hsla(320,50%,15%,1)] mb-2">
+      <%= label %>
+      <% if required %>
+        <span class="text-[#F16A6F]" aria-label="required">*</span>
+      <% end %>
+    </label>
+  <% end %>
+
+  <textarea
+    id="<%= input_id %>"
+    name="<%= name %>"
+    rows="<%= rows %>"
+    placeholder="<%= placeholder %>"
+    class="w-full px-4 py-3 font-sans text-base text-[hsla(320,50%,15%,1)] bg-white border <%= border_class %> rounded-lg transition-all duration-250 focus:outline-none focus:ring-2 disabled:bg-[hsla(320,20%,98%,1)] disabled:cursor-not-allowed <%= resize_class %>"
+    <%= 'required' if required %>
+    <%= 'disabled' if disabled %>
+    <%= 'readonly' if readonly %>
+    <%= "maxlength=\"#{maxlength}\"" if maxlength %>
+    <%= "aria-invalid=\"true\"" if has_error %>
+    <%= "aria-describedby=\"#{error_id}\"" if has_error %>
+    <%= "aria-describedby=\"#{help_id}\"" if help_text && !has_error %>
+    <%= 'data-character-count-target="input"' if show_count %>
+    <%= 'data-action="input->character-count#update"' if show_count %>
+  ><%= value %></textarea>
+
+  <%# Character Count %>
+  <% if show_count && maxlength %>
+    <div class="mt-1 text-right">
+      <span data-character-count-target="counter" class="text-sm text-[hsla(320,30%,35%,1)] font-sans">
+        0 / <%= maxlength %>
+      </span>
+    </div>
+  <% end %>
+
+  <% if has_error %>
+    <p id="<%= error_id %>" class="mt-2 text-sm text-[#F16A6F] font-sans" role="alert">
+      <%= error %>
+    </p>
+  <% end %>
+
+  <% if help_text && !has_error %>
+    <p id="<%= help_id %>" class="mt-2 text-sm text-[hsla(320,30%,35%,1)] font-sans">
+      <%= help_text %>
+    </p>
+  <% end %>
+</div>
