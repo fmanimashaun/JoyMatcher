@@ -50,7 +50,9 @@
       "Bash(bundle:*)",
       "Bash(gem install:*)",
       "Bash(gem list:*)",
-      "Bash(ridk version:*)"
+      "Bash(ridk version:*)",
+      "Bash(git config user.name \"fmanimashaun\")",
+      "Bash(git config user.email \"fmanimashaun@users.noreply.github.com\")"
     ]
   }
 }
