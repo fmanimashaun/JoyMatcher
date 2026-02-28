@@ -1,25 +1,28 @@
 # Planned Features
 
-**Last Updated:** 2026-02-27
+**Last Updated:** 2026-02-28
 
 ---
 
 ## Next Up (Priority Order)
 
 ### Phase 1: Rails Foundation
-1. ⏳ **Rails 8 Project Setup**
-   - Initialize Rails 8 app
-   - Configure PostgreSQL
-   - Setup Tailwind CSS v4
-   - Install Hotwire (Turbo + Stimulus)
-   - Configure Devise
-   - Setup testing framework
+1. ✅ **Rails 8 Project Setup** — COMPLETE
+   - Rails 8.1.2, Ruby 3.4.8, PostgreSQL, Hotwire
+   - Tailwind CSS v4 (pure CSS `@theme {}` — no JS config)
+   - SimpleForm (jm_default/jm_inline/jm_checkbox/jm_radio wrappers)
+   - Pagy v43 (OPTIONS-based config, Pagy::Method in controller)
+   - RSpec + Capybara + FactoryBot + SimpleCov + WebMock
+   - Rack::Attack, Bullet, CanCanCan, Brakeman, Rubocop
+   - App module: `JoyMatcher`, databases: `joymatcher_*`
 
 2. ⏳ **User Model & Authentication**
-   - Devise setup
-   - User model with tier tracking
-   - Basic authentication flows
-   - Session management
+   - `has_secure_password` (BCrypt — NOT Devise)
+   - User model with subscription enum + tier tracking
+   - Sessions controller (login/logout)
+   - Registrations controller (signup)
+   - `current_user` helper in ApplicationController
+   - Auth before_action guards
 
 3. ⏳ **Tier System Models**
    - User tier completion tracking
@@ -78,11 +81,11 @@
     - Button variants
     - Card variants
 
-12. ⏳ **Design System Implementation**
-    - Tailwind config with jm-* tokens
-    - Typography system
-    - Responsive design
-    - Accessibility (WCAG 2.1 AA)
+12. ✅ **Design System Implementation** — COMPLETE
+    - Tailwind CSS v4 `@theme {}` with all jm-* tokens
+    - Typography (Georgia serif, HSLA 320° color system)
+    - Component utilities (.btn, .card, .form-*, .badge, .alert, .pagy)
+    - Accessibility base styles (focus-visible, skip-link)
 
 ---
 

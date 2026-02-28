@@ -1,6 +1,6 @@
 # Completed Features
 
-**Last Updated:** 2026-02-28
+**Last Updated:** 2026-02-28 (Session 2)
 
 ---
 
@@ -24,6 +24,62 @@
 ---
 
 ## Rails 8 Implementation
+
+### Phase 1: Rails Foundation
+
+- ✅ **Rails 8 Project Initialisation**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - Rails 8.1.2, Ruby 3.4.8, PostgreSQL, devcontainer
+  - Gems: Hotwire (Turbo + Stimulus), Tailwind CSS v4, SimpleForm, Pagy v43, RSpec, CanCanCan, Rack::Attack, Bullet, Brakeman, Rubocop
+
+- ✅ **Rails App Configuration (Session 2)**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - Module renamed: `App` → `JoyMatcher`
+  - Databases renamed: `app_*` → `joymatcher_*`
+  - `bin/setup` executed: databases created (`joymatcher_development`, `joymatcher_test`)
+
+- ✅ **Tailwind CSS v4 Design System Configuration**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - File: `app/assets/tailwind/application.css`
+  - Full `@theme {}` block with all JoyMatcher CSS custom properties
+  - `@layer base {}`: body, headings, links, inputs defaults
+  - `@layer components {}`: .btn, .card, .form-*, .alert, .badge, .progress-*, .nav-link, .pagy, .skip-link
+  - No `tailwind.config.js` needed — Tailwind v4 pure CSS approach
+  - Pagy CSS uses ARIA attribute selectors (v43 compatibility)
+
+- ✅ **SimpleForm Configuration**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - File: `config/initializers/simple_form.rb`
+  - Wrappers: `jm_default`, `jm_inline`, `jm_checkbox`, `jm_radio`
+  - Input classes match form-input design system tokens
+  - Error/valid states use coral (#F16A6F) and warm purple (#8B7AA8)
+
+- ✅ **Pagy v43 Configuration**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - File: `config/initializers/pagy.rb`
+  - Uses `Pagy::OPTIONS` (mutable) — NOT `Pagy::DEFAULT` (frozen in v43)
+  - No extras directory in v43 — features are built-in
+  - `include Pagy::Method` in ApplicationController (replaces Pagy::Backend)
+  - Helpers are instance methods on `@pagy` object (no Pagy::Frontend)
+
+- ✅ **Test Infrastructure**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - RSpec with FactoryBot, Faker, DatabaseCleaner, SimpleCov, WebMock
+  - Capybara for system tests
+  - Spec support files: `spec/spec_helper.rb`, `spec/rails_helper.rb`
+
+- ✅ **Security Configuration**
+  - Brain file: N/A
+  - Completed: 2026-02-28
+  - `config/initializers/rack_attack.rb`: rate limiting (login, signup, password reset)
+  - `config/environments/development.rb`: Bullet N+1 detection
+  - `app/models/ability.rb`: CanCanCan RBAC (generated)
 
 - ✅ **Rails Component Library (64 components - 100% COMPLETE)**
   - Brain file: `brain/component-library-implementation.md`
@@ -55,7 +111,7 @@
 
 ## Statistics
 
-- **Total Features Completed:** 1 (Rails Component Library)
+- **Total Rails Features Completed:** Phase 1 Foundation ✅
 - **Rails Components:** 64/64 (100% COMPLETE) ✅
   - Forms: 12/12 ✅
   - UI: 37/37 ✅
@@ -64,7 +120,7 @@
 - **Prototype Pages:** 25
 - **Agent Skills:** 11 (updated with component examples)
 - **Design Audits:** 1
-- **Next Feature:** Ready for Rails 8 application development using component library
+- **Next Feature:** Phase 1 Item 2 — User Model & Authentication (`has_secure_password`)
 
 ---
 
