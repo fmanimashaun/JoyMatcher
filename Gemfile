@@ -7,11 +7,11 @@ gem "propshaft"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.6"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
+gem "puma", "~> 7.2"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+gem "turbo-rails", "~> 2.0"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
@@ -41,12 +41,12 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
-gem "solid_queue"
+gem "solid_queue", "~> 1.3"
 gem "solid_cable"
 gem "mission_control-jobs" # UI for monitoring Solid Queue background jobs
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "bootsnap", "~> 1.22", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
@@ -76,8 +76,8 @@ gem "aasm", "~> 5.5"
 gem "csv"
 
 # Country and Holiday support
-gem "countries"  # ISO country data (names, codes, currencies)
-gem "holidays"   # National holidays for 100+ countries
+gem "countries", "~> 8.1"  # ISO country data (names, codes, currencies)
+gem "holidays"              # National holidays for 100+ countries
 
 # Security: Rate limiting for authentication and API endpoints
 gem "rack-attack"
@@ -121,11 +121,11 @@ group :development, :test do
   gem "bundler-audit", require: false
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
+  gem "brakeman", "~> 7.1", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "rubocop-rspec", require: false
+  gem "rubocop-rspec", "~> 3.9", require: false
 
   # N+1 query detection
   gem "bullet"
@@ -142,7 +142,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "selenium-webdriver", "~> 4.40"
 
   # Code coverage analysis
   gem "simplecov", require: false
