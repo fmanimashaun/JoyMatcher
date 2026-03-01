@@ -15,6 +15,8 @@ import TabsController from "controllers/tabs_controller"
 import TagInputController from "controllers/tag_input_controller"
 import ToastController from "controllers/toast_controller"
 import TooltipController from "controllers/tooltip_controller"
+import SignupFormController from "controllers/signup_form_controller"
+import PasswordVisibilityController from "controllers/password_visibility_controller"
 
 application.register("accordion", AccordionController)
 application.register("character-count", CharacterCountController)
@@ -31,3 +33,5 @@ application.register("tabs", TabsController)
 application.register("tag-input", TagInputController)
 application.register("toast", ToastController)
 application.register("tooltip", TooltipController)
+application.register("signup-form", SignupFormController)
+application.register("password-visibility", PasswordVisibilityController)

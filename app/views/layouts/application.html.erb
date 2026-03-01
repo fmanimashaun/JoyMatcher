@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "JoyMatcher" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="JoyMatcher — Trust-based relationship infrastructure for marriage-minded professionals.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="JoyMatcher">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,8 +24,31 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="antialiased" style="font-family: Georgia, 'Times New Roman', serif; background-color: hsla(320, 12%, 98%, 1);">
+    <%# Accessibility: skip to main content %>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <%# Flash messages — shown above everything %>
+    <% if notice.present? %>
+      <div class="fixed top-4 right-4 z-50 max-w-sm" role="status" aria-live="polite">
+        <div class="alert alert-info shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span><%= notice %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <% if alert.present? %>
+      <div class="fixed top-4 right-4 z-50 max-w-sm" role="alert" aria-live="assertive">
+        <div class="alert alert-error shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span><%= alert %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Main content area %>
+    <main id="main-content">
       <%= yield %>
     </main>
   </body>

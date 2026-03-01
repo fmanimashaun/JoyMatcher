@@ -1,0 +1,53 @@
+<% content_for :title, "Set New Password — JoyMatcher" %>
+
+<div class="min-h-screen flex items-center justify-center py-12 px-4" style="background-color: hsla(320, 12%, 98%, 1);">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style="background: linear-gradient(135deg, #4D0052, #F16A6F);">
+        <span class="text-white text-2xl font-bold" style="font-family: Georgia, serif;">J</span>
+      </div>
+      <h1 class="text-3xl font-semibold" style="color: hsla(320, 50%, 15%, 1); font-family: Georgia, serif;">Set new password</h1>
+      <p class="mt-2 text-sm" style="color: hsla(320, 30%, 35%, 1);">Choose a strong password for your account</p>
+    </div>
+
+    <% if alert.present? %>
+      <div class="alert alert-error mb-6" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span><%= alert %></span>
+      </div>
+    <% end %>
+
+    <div class="card">
+      <%= form_with url: password_path(params[:token]), method: :put do |f| %>
+        <div class="form-group">
+          <%= f.label :password, "New Password", class: "form-label" %>
+          <%= f.password_field :password,
+              class: "form-input",
+              placeholder: "Create a strong password",
+              autocomplete: "new-password",
+              required: true,
+              autofocus: true,
+              minlength: 12 %>
+          <p class="form-hint">At least 12 characters</p>
+        </div>
+
+        <div class="form-group mt-4">
+          <%= f.label :password_confirmation, "Confirm New Password", class: "form-label" %>
+          <%= f.password_field :password_confirmation,
+              class: "form-input",
+              placeholder: "Repeat your new password",
+              autocomplete: "new-password",
+              required: true %>
+        </div>
+
+        <div class="mt-6">
+          <%= f.submit "Update Password",
+              class: "btn btn-primary w-full justify-center",
+              style: "width: 100%;" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="recipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4D0052"/>
+      <stop offset="100%" stop-color="#F16A6F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Two overlapping circles representing balance -->
+  <circle cx="30" cy="40" r="18" fill="url(#recipGrad)" opacity="0.3"/>
+  <circle cx="50" cy="40" r="18" fill="url(#recipGrad)" opacity="0.3"/>
+
+  <!-- Arrows showing exchange -->
+  <!-- Right arrow -->
+  <path d="M25 30 L55 30" stroke="url(#recipGrad)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M50 25 L55 30 L50 35" stroke="url(#recipGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Left arrow -->
+  <path d="M55 50 L25 50" stroke="url(#recipGrad)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M30 45 L25 50 L30 55" stroke="url(#recipGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Center point showing balance -->
+  <circle cx="40" cy="40" r="5" fill="url(#recipGrad)" opacity="0.9"/>
+</svg>

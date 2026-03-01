@@ -1,0 +1,47 @@
+<% content_for :title, "Reset Password — JoyMatcher" %>
+
+<div class="min-h-screen flex items-center justify-center py-12 px-4" style="background-color: hsla(320, 12%, 98%, 1);">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style="background: linear-gradient(135deg, #4D0052, #F16A6F);">
+        <span class="text-white text-2xl font-bold" style="font-family: Georgia, serif;">J</span>
+      </div>
+      <h1 class="text-3xl font-semibold" style="color: hsla(320, 50%, 15%, 1); font-family: Georgia, serif;">Reset your password</h1>
+      <p class="mt-2 text-sm" style="color: hsla(320, 30%, 35%, 1);">Enter your email and we'll send you reset instructions</p>
+    </div>
+
+    <% if notice.present? %>
+      <div class="alert alert-info mb-6" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span><%= notice %></span>
+      </div>
+    <% end %>
+
+    <div class="card">
+      <%= form_with url: passwords_path do |f| %>
+        <div class="form-group">
+          <%= f.label :email_address, "Email Address", class: "form-label" %>
+          <%= f.email_field :email_address,
+              class: "form-input",
+              placeholder: "you@example.com",
+              autocomplete: "email",
+              required: true,
+              autofocus: true %>
+        </div>
+
+        <div class="mt-6">
+          <%= f.submit "Send Reset Instructions",
+              class: "btn btn-primary w-full justify-center",
+              style: "width: 100%;" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6 text-center text-sm" style="color: hsla(320, 30%, 35%, 1);">
+        Remember your password?
+        <%= link_to "Sign in", new_session_path, class: "font-semibold", style: "color: #4D0052;" %>
+      </div>
+    </div>
+
+  </div>
+</div>

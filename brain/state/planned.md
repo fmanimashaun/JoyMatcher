@@ -1,6 +1,6 @@
 # Planned Features
 
-**Last Updated:** 2026-02-28
+**Last Updated:** 2026-03-01
 
 ---
 
@@ -16,13 +16,20 @@
    - Rack::Attack, Bullet, CanCanCan, Brakeman, Rubocop
    - App module: `JoyMatcher`, databases: `joymatcher_*`
 
-2. ⏳ **User Model & Authentication**
-   - `has_secure_password` (BCrypt — NOT Devise)
-   - User model with subscription enum + tier tracking
-   - Sessions controller (login/logout)
-   - Registrations controller (signup)
-   - `current_user` helper in ApplicationController
-   - Auth before_action guards
+2. ✅ **User Model & Authentication** — COMPLETE
+   - `has_secure_password` (BCrypt — NOT Devise) via `rails generate authentication`
+   - User model: 7-role enum, 3-subscription enum, all JoyMatcher domain fields
+   - Sessions controller (login/logout) with rate limiting
+   - Registrations controller (custom signup with tier selection)
+   - `current_user` via `Current.session&.user` (Rails 8 thread-local)
+   - Auth before_action guards (`require_authentication`, `require_admin!`, `require_role!`)
+   - CanCanCan Ability class: full RBAC for all 7 roles
+   - 249 routes scaffolded (all public + app + admin routes)
+   - ~50 stub controllers, ~140 stub ERB views
+   - Login + Signup views prototype-aligned (Stimulus: signup-form, password-visibility)
+   - Seed data: 15 demo users across all roles/subscriptions
+   - Image assets: 42 files in `public/images/`, logos in `app/assets/images/`
+   - CMS/Blog spec: `docs/Technical Specifications/cms_blog_system.md`
 
 3. ⏳ **Tier System Models**
    - User tier completion tracking
@@ -49,11 +56,12 @@
    - Upgrade flows
 
 ### Phase 3: Admin System
-7. ⏳ **Admin RBAC with Pundit**
-   - Admin model
-   - Pundit policies
-   - Role-based dashboards
-   - VIP Expert isolation
+7. ⏳ **Admin RBAC — Dashboard Implementation**
+   - CanCanCan Ability class: ✅ DONE (all 7 roles)
+   - Role-based dashboard content (replace stubs with real data)
+   - Admin user management UI (CRUD)
+   - VIP Expert isolation enforced in controllers (not just Ability)
+   - NOTE: Pundit was considered but CanCanCan chosen per CLAUDE.md + existing gem
 
 8. ⏳ **VIP Workflow**
    - VIP application system

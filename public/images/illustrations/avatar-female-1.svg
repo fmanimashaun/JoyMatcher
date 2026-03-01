@@ -1,0 +1,23 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4D0052"/>
+      <stop offset="100%" stop-color="#F16A6F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="url(#grad1)" opacity="0.15"/>
+
+  <!-- Face -->
+  <circle cx="60" cy="50" r="22" fill="url(#grad1)" opacity="0.8"/>
+
+  <!-- Hair (long, side-parted) -->
+  <path d="M40 45 Q45 30 60 28 Q75 30 80 45 L80 55 Q75 50 70 48 Q65 46 60 46 Q55 46 50 48 Q45 50 40 55 Z"
+        fill="url(#grad1)"/>
+  <ellipse cx="38" cy="55" rx="8" ry="15" fill="url(#grad1)" opacity="0.9"/>
+  <ellipse cx="82" cy="55" rx="8" ry="15" fill="url(#grad1)" opacity="0.9"/>
+
+  <!-- Body/shoulders -->
+  <ellipse cx="60" cy="95" rx="32" ry="28" fill="url(#grad1)" opacity="0.7"/>
+</svg>
