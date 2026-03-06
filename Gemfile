@@ -43,7 +43,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # AWS SDK for file storage (profile photos, documents)
-gem "aws-sdk-s3", "~> 1.176", require: false
+gem "aws-sdk-s3", "~> 1.215", require: false
 
 # Forms made easy for Rails [https://github.com/heartcombo/simple_form]
 gem "simple_form"
